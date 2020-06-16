@@ -4,34 +4,29 @@ from django.utils import timezone
 
 
 class Event(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='admin')
+    input_date = models.DateTimeField(
             default=timezone.now)
-    published_date = models.DateTimeField(
+    exp_date = models.DateTimeField(
             blank=True, null=True)
     # Health Data
-    walks = models.IntegerField()
-    sleep = models.FloatField()
-    deep_sleep = models.FloatField()
-    heartbeat = models.IntegerField()
-    calorie = models.IntegerField()
-    distance = models.FloatField()
+    walks = models.IntegerField(blank=True, null=True)
+    sleep = models.FloatField(blank=True, null=True)
+    deep_sleep = models.FloatField(blank=True, null=True)
+    heartbeat = models.IntegerField(blank=True, null=True)
+    calorie = models.IntegerField(blank=True, null=True)
+    distance = models.FloatField(blank=True, null=True)
     # Mental Data
     event = models.TextField()
-    thoughts = models.TextField()
+    thoughts = models.TextField(blank=True, null=True)
     emotion = models.TextField()
     emotion_intensity = models.IntegerField()
     importance = models.IntegerField()
-    future = models.IntegerField()
+    future = models.IntegerField(default=0)
     #Social Data
-    related_people = models.TextField()
-    related_place = models.TextField()
+    related_people = models.TextField(blank=True, null=True)
+    related_place = models.TextField(blank=True, null=True)
 
     def publish(self):
-        self.published_date = timezone.now()
+        self.exp_date = timezone.now()
         self.save()
-
-    def __str__(self):
-        return self.title
