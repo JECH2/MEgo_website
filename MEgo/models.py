@@ -54,12 +54,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'nickname'
     REQUIRED_FIELDS = ['email']
 
+    def __str__(self):
+        return self.nickname
+
+
 class Experience(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='admin')
     input_date = models.DateTimeField(
             default=timezone.now)
     exp_date = models.DateTimeField(
-            blank=True, null=True)
+            default=timezone.now)
     # Health Data
     walks = models.IntegerField(blank=True, null=True)
     sleep = models.FloatField(blank=True, null=True)
@@ -68,7 +72,7 @@ class Experience(models.Model):
     calorie = models.IntegerField(blank=True, null=True)
     distance = models.FloatField(blank=True, null=True)
     # Mental Data
-    Experience = models.TextField()
+    experience = models.TextField()
     thoughts = models.TextField(blank=True, null=True)
     emotion = models.TextField()
     emotion_intensity = models.IntegerField()
@@ -79,8 +83,7 @@ class Experience(models.Model):
     related_place = models.TextField(blank=True, null=True)
 
     def publish(self):
-        self.exp_date = timezone.now()
         self.save()
 
     def __str__(self):
-        return self.event
+        return self.experience
