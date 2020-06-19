@@ -4,7 +4,7 @@
     {% for exp in exps %}
         <div class="exp">
             <h2><a href="{% url 'experience_detail' pk=exp.pk %}">exp date : {{ exp.exp_date }}</a></h2>
-            <p>{{ exp.experience|linebreaksbr }}</p>
+            <p>{{ exp.event|linebreaksbr }}</p>
         </div>
     {% endfor %}
 {% endblock %}

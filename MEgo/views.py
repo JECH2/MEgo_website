@@ -45,3 +45,5 @@ def experience_edit(request, pk):
         form = ExpForm(instance=exp)
     return render(request, 'MEgo/experience_edit.html', {'form': form})
 
+def analysis_report(request):
+    return render(request, 'MEgo/analysis_report.html')

@@ -1,21 +1,21 @@
 from django.conf import settings
-from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
-
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
 
+# when user account is created via command, user manager function is called
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(self, email, nickname, password=None):
-        if not email:
+    def create_user(self, email, age, gender, nickname, password=None):
+        if not (email and age and gender):
             raise ValueError('must have user email')
         user = self.model(
             email=self.normalize_email(email),
-            nickname=nickname
+            nickname=nickname,
+            age=age,
+            gender=gender
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -25,7 +25,9 @@ class UserManager(BaseUserManager):
         user = self.create_user(
             email=self.normalize_email(email),
             nickname=nickname,
-            password=password
+            password=password,
+            age=22,
+            gender="Female"
         )
         user.is_admin = True
         user.is_superuser = True
@@ -33,7 +35,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-
+# we use AbstractBaseUser to define our custom user
 class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
@@ -51,6 +53,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
+    # additional field : age and gender
+    age = models.IntegerField(null = False)
+    gender = models.CharField(max_length=200, null = False)
+
     USERNAME_FIELD = 'nickname'
     REQUIRED_FIELDS = ['email']
 
@@ -58,6 +64,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.nickname
 
 
+# example : if question is "What makes you happy?",
+# data is stored as (What makes you happy?, 2, angry)
+class Questions(models.Model):
+    content = models.CharField(max_length=200) # content of question
+    question_area = models.CharField(max_length=200) # event, thoughts, emotion
+    related_tags = models.CharField(max_length=200)
+
+
+# experience data structure
 class Experience(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='admin')
     input_date = models.DateTimeField(
@@ -72,15 +87,18 @@ class Experience(models.Model):
     calorie = models.IntegerField(blank=True, null=True)
     distance = models.FloatField(blank=True, null=True)
     # Mental Data
-    experience = models.TextField()
+    event = models.TextField()
     thoughts = models.TextField(blank=True, null=True)
     emotion = models.TextField()
-    emotion_intensity = models.IntegerField()
+    # emotion_intensity = models.IntegerField()
     importance = models.IntegerField()
     future = models.IntegerField(default=0)
     #Social Data
-    related_people = models.TextField(blank=True, null=True)
-    related_place = models.TextField(blank=True, null=True)
+    related_people = models.CharField(max_length=200, blank=True, null=True)
+    related_place = models.CharField(max_length=200, blank=True, null=True)
+
+    # picture & video & youtube --> link(str) : youtube API 찾아보기
+    media_links = models.TextField(blank=True, null=True)
 
     def publish(self):
         self.save()

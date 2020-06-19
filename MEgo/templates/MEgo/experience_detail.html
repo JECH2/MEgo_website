@@ -4,7 +4,7 @@
     <div class="exp">
         <h2>{{ exp.exp_date }}</h2>
         <a class="btn btn-default" href="{% url 'experience_edit' pk=exp.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-        <p>{{ exp.experience|linebreaksbr }}</p>
+        <p>{{ exp.event|linebreaksbr }}</p>
         <p>{{ exp.thoughts|linebreaksbr }}</p>
         <p>{{ exp.emotion|linebreaksbr }}</p>
     </div>

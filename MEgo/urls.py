@@ -6,4 +6,5 @@ urlpatterns = [
     path('MEgo/<int:pk>/', views.experience_detail, name='experience_detail'),
     path('MEgo/new/', views.experience_new, name='experience_new'),
     path('MEgo/<int:pk>/edit/', views.experience_edit, name='experience_edit'),
+    path('MEgo/report/', views.analysis_report, name='analysis_report'),
 ]

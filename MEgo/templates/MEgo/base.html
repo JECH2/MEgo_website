@@ -12,10 +12,12 @@
         <div class="page-header">
             {% if user.is_authenticated %}
             <a href="{% url 'experience_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+            <a href="{% url 'analysis_report' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
+            <p class="top-menu"><small> Hello {{ user.nickname }} (<a href="{% url 'logout' %}">Log out</a>)</small></p>
             {% else %}
             <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
             {% endif %}
-            <h1><a href="">MEGO</a></h1>
+            <h1><a href="{% url 'experience_list' %}">MEGO</a></h1>
             <p> TEAM MEMBERS : JIWON, JISEONG, EUNJIN </p>
         </div>
         <div class="content container">
