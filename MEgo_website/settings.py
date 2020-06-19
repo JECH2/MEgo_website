@@ -123,3 +123,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_REDIRECT_URL = '/'
+
+# Media files upload URL & Directories
+MEDIA_URL = '/files/' # URL path
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads') # local path

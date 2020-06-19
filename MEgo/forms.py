@@ -7,7 +7,7 @@ class ExpForm(forms.ModelForm):
     class Meta:
         IMPORTANCE_CHOICES = [('1','not important'), ('2','important'), ('3', 'very important')]
         model = Experience
-        fields = ['exp_date', 'media_links', 'event', 'thoughts','emotion','importance']
+        fields = ['exp_date', 'photo', 'thumbnail_photo', 'media_links', 'event', 'thoughts','emotion','importance']
         widgets = {
             #'exp_date' : forms.SplitDateTimeWidget({'class':'form-control'}),
             'media_links' : forms.TextInput(attrs={'class': 'form-control', 'placeholder':'insert some medium(picture, video) as link : https://mego.pythonanywhere.com'}),

@@ -72,6 +72,16 @@ class Questions(models.Model):
     related_tags = models.CharField(max_length=200)
 
 
+# This function is needed for uploading user's data
+def user_path(instance, filename): #param instance is meaning for model, filename is the name of uploaded file
+    from random import choice
+    import string # string.ascii_letters : ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+    arr = [choice(string.ascii_letters) for _ in range(8)]
+    pid = ''.join(arr) # 8 length random string is file name
+    extension = filename.split('.')[-1] # extract the file extension such as .png .jpg. and etc.
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<random>
+    return '%s/%s.%s' % (instance.author.nickname, pid, extension) # ex : wayhome/abcdefgs.png
+
 # experience data structure
 class Experience(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='admin')
@@ -98,6 +108,8 @@ class Experience(models.Model):
     related_place = models.CharField(max_length=200, blank=True, null=True)
 
     # picture & video & youtube --> link(str) : youtube API 찾아보기
+    photo = models.ImageField(blank=True,upload_to=user_path)  # path based on the function and settings
+    thumbnail_photo = models.ImageField(blank=True, upload_to=user_path) # it is not required field
     media_links = models.TextField(blank=True, null=True)
 
     def publish(self):

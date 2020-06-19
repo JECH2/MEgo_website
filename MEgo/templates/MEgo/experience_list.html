@@ -7,6 +7,9 @@
         <div class="exp">
             <h2><a href="{% url 'experience_detail' pk=exp.pk %}">exp date : {{ exp.exp_date }}</a></h2>
             <p>{{ exp.event|linebreaksbr }}</p>
+            {% if exp.thumbnail_photo %}
+                <img src="{{ exp.thumbnail_photo.url }}" width="200" height="120" alt="">
+            {% endif %}
         </div>
     {% endfor %}
 {% endblock %}

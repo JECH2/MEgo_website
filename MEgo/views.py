@@ -26,7 +26,7 @@ def experience_detail(request, pk):
 def experience_new(request):
     # 폼에 데이터를 받은 상황
     if request.method == "POST":
-        form = ExpForm(request.POST)
+        form = ExpForm(request.POST, request.FILES)
         if form.is_valid():
             exp = form.save(commit=False)
             exp.author = request.user
@@ -40,7 +40,7 @@ def experience_new(request):
 def experience_edit(request, pk):
     exp = get_object_or_404(Experience, pk=pk)
     if request.method == "POST":
-        form = ExpForm(request.POST, instance=exp)
+        form = ExpForm(request.POST, request.FILES, instance=exp)
         if form.is_valid():
             exp = form.save(commit=False)
             exp.author = request.user
