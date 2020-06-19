@@ -1,15 +1,20 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from django.shortcuts import redirect
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from .models import Experience
-from .forms import ExpForm
+from django.contrib.auth.forms import UserCreationForm
+from .models import Experience, User
+from .forms import ExpForm, UserForm
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 
 # Create your views here.
 def experience_list(request):
-    exps = Experience.objects.filter(exp_date__lte=timezone.now()).order_by('exp_date')
+    if request.user.is_authenticated and request.user.nickname == 'admin':
+        exps = Experience.objects.order_by('exp_date')
+    else:
+        exps = Experience.objects.filter(author__exact=request.user.id).order_by('exp_date')
+    # exps = Experience.objects.filter(exp_date__lte=timezone.now()).order_by('exp_date')
     return render(request, 'MEgo/experience_list.html', {'exps':exps})
 
 @login_required
@@ -47,3 +52,24 @@ def experience_edit(request, pk):
 
 def analysis_report(request):
     return render(request, 'MEgo/analysis_report.html')
+
+def new_question(request):
+    return render(request, 'MEgo/new_question.html')
+
+def support(request):
+    return render(request, 'support.html')
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+    # 모델폼의 유효성 검증이 valid할 경우, DB에 저장
+        if form.is_valid():
+            user_instance = form.save()
+            login(request, user_instance)
+        return render(request, 'registration/signup_complete.html', {'id' : id })
+
+# HTTP Method가 GET 인 경우
+    else:
+        form = UserForm()
+
+    return render(request, 'registration/signup.html', {'form': form})

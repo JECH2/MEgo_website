@@ -9,7 +9,7 @@ class UserManager(BaseUserManager):
     use_in_migrations = True
 
     def create_user(self, email, age, gender, nickname, password=None):
-        if not (email and age and gender):
+        if not (email):
             raise ValueError('must have user email')
         user = self.model(
             email=self.normalize_email(email),
@@ -65,7 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 # example : if question is "What makes you happy?",
-# data is stored as (What makes you happy?, 2, angry)
+# data is stored as (What makes you happy?, emotion, angry)
 class Questions(models.Model):
     content = models.CharField(max_length=200) # content of question
     question_area = models.CharField(max_length=200) # event, thoughts, emotion
@@ -104,4 +104,4 @@ class Experience(models.Model):
         self.save()
 
     def __str__(self):
-        return self.experience
+        return self.event

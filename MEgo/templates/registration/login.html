@@ -4,7 +4,7 @@
     {% if form.errors %}
         <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
-
+    <h2>Sign in</h2>
     <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
         <table>
@@ -19,6 +19,7 @@
         </table>
 
         <input type="submit" value="login" />
+        <button type="button" onclick="location.href='{% url 'signup' %}'">signup</button>
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
 {% endblock %}
