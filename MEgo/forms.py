@@ -29,10 +29,10 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['nickname', 'email', 'age', 'gender', 'password']
         widgets = {
-            'nickname': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'input within 15 characters'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder':'example : mego.kaist@gmail.com'}),
-            'password' : forms.PasswordInput(attrs={'class': 'form-control','placeholder':'within 15 characters'}),
-            'age' : forms.Select(attrs={'class': 'form-control'}, choices=AGE_CHOICES),
+            'nickname': forms.TextInput(attrs={'class': 'custom-form', 'placeholder':'input within 15 characters'}),
+            'email': forms.EmailInput(attrs={'class': 'custom-form', 'placeholder':'example : mego.kaist@gmail.com'}),
+            'password' : forms.PasswordInput(attrs={'class': 'custom-form','placeholder':'within 15 characters'}),
+            'age' : forms.Select(attrs={'class': 'custom-form'}, choices=AGE_CHOICES),
             'gender' : forms.RadioSelect(attrs=None, choices=GENDER_CHOICES)
         }
     # 글자수 제한

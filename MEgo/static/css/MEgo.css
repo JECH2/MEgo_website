@@ -1,5 +1,5 @@
+
 .page-header {
-    background-color: #ff9400;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
 }
@@ -15,9 +15,6 @@
     margin-left: 40px;
 }
 
-h1, h2, h3, h4 {
-    font-family: 'Lobster', cursive;
-}
 
 .date {
     color: #828282;
@@ -44,4 +41,23 @@ h1, h2, h3, h4 {
 
 .exp h1 a, .exp h1 a:visited {
     color: #000000;
+}
+
+.registration_content {
+}
+
+.custom-form {
+    color: gray;
+}
+
+body {
+    background: radial-gradient( at 0% 0%, rgb(143,52,101) 0%, rgb(108,28,71) 50%, rgb(62,38,81) 100%);
+    font-family: 'Catamaran', sans-serif;
+    font-weight: 400;
+    color: white;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Catamaran', sans-serif;
+    font-weight: 900;
 }
