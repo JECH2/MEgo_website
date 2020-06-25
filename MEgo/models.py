@@ -8,12 +8,13 @@ from django.db import models
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(self, email, age, gender, nickname, password=None):
+    def create_user(self, user_id, email, age, gender, nickname, password=None):
         if not (email):
             raise ValueError('must have user email')
         user = self.model(
             email=self.normalize_email(email),
             nickname=nickname,
+            user_id=user_id,
             age=age,
             gender=gender
         )
@@ -21,8 +22,9 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, nickname, password):
+    def create_superuser(self, email, user_id, nickname, password):
         user = self.create_user(
+            user_id=user_id,
             email=self.normalize_email(email),
             nickname=nickname,
             password=password,
@@ -48,6 +50,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=False,
         unique=True
     )
+    user_id = models.CharField(
+        max_length=20,
+        null=False,
+        unique=True
+    )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -57,11 +64,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     age = models.IntegerField(null = False)
     gender = models.CharField(max_length=200, null = False)
 
-    USERNAME_FIELD = 'nickname'
-    REQUIRED_FIELDS = ['email']
+    USERNAME_FIELD = 'user_id'
+    REQUIRED_FIELDS = ['email','nickname']
 
     def __str__(self):
-        return self.nickname
+        return self.user_id
 
 
 # example : if question is "What makes you happy?",
@@ -80,7 +87,7 @@ def user_path(instance, filename): #param instance is meaning for model, filenam
     pid = ''.join(arr) # 8 length random string is file name
     extension = filename.split('.')[-1] # extract the file extension such as .png .jpg. and etc.
     # file will be uploaded to MEDIA_ROOT/user_<id>/<random>
-    return '%s/%s.%s' % (instance.author.nickname, pid, extension) # ex : wayhome/abcdefgs.png
+    return '%s/%s.%s' % (instance.author.id, pid, extension) # ex : wayhome/abcdefgs.png
 
 # experience data structure
 class Experience(models.Model):

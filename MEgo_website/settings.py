@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'MEgo',
+    'MEgo', # our app
+    'widget_tweaks', # for custom form design
 ]
 
 MIDDLEWARE = [

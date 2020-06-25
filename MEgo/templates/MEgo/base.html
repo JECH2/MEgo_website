@@ -1,4 +1,5 @@
 {% load static %}
+{% load widget_tweaks %}
 
 <html>
     <head>
@@ -6,33 +7,34 @@
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="{% static 'css/MEgo.css' %}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;900&display=swap">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <style>
+        body {
+            background: rgb(229,211,221);
+            font-family: 'Catamaran', sans-serif;
+            font-weight: 400;
+            color: white;
+        }
+    </style>
     </head>
     <body>
-        <div class="page-header">
-            {% if user.is_authenticated %}
-            <a href="{% url 'support' %}" class="top-menu"><small>Support</small></a>
-            <a href="{% url 'analysis_report' %}" class="top-menu"><small>Analysis_report</small></a>
-            <a href="{% url 'experience_new' %}" class="top-menu"><small>Experience_new</small></a>
-            <a href="{% url 'new_question' %}" class="top-menu"><small>New_question</small></a>
-            <a href="{% url 'logout' %}" class="top-menu"><small>Logout</small></a>
-            <a class="top-menu"><small> Hello, {{ user.nickname }}!</small></a>
-
-            {% else %}
-            <a href="{% url 'login' %}" class="top-menu"><small>Login</small></a>
-            {% endif %}
-        </div>
-        <div class="page-header">
-            <h1><a href="{% url 'experience_list' %}">MEGO</a></h1>
-            <p> Your Self-Awareness-Service </p>
-        </div>
+        <header class="page-header">
+            <h1 class="logo"><a href="{% url 'experience_list' %}">MEGO<a></h1>
+            <nav>
+                <ul class="top-menu">
+                    <li><a> Hello, {{ user.nickname }}!</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    <li><a href="{% url 'new_question' %}">New_question</a></li>
+                    <li><a href="{% url 'experience_new' %}">Experience_new</a></li>
+                    <li><a href="{% url 'analysis_report' %}">Analysis_report</a></li>
+                    <li><a href="{% url 'support' %}">Support</a></li>
+                </ul>
+            </nav>
+        </header>
         <div class="content container">
-            <div class="row">
-                <div class="col-md-8">
-                    {% block content %}
-                    {% endblock %}
-                </div>
-            </div>
+            <center>
+            {% block content %}
+            {% endblock %}
+            </center>
         </div>
     </body>
 </html>

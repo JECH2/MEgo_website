@@ -1,15 +1,13 @@
-
-
 {% extends "registration/login_base.html" %}
 
 {% block content %}
     {% if form.errors %}
         <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
-    <h1>MEGO</h1>
     <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
-        <table>
+
+        <table class="form-group">
         <tr>
             <td>{{ form.username.label_tag }}</td>
             <td>{{ form.username }}</td>
@@ -19,9 +17,10 @@
             <td>{{ form.password }}</td>
         </tr>
         </table>
-
-        <input type="submit" value="login" />
-        <button type="button" onclick="location.href='{% url 'signup' %}'">signup</button>
-        <input type="hidden" name="next" value="{{ next }}" />
+        <div class="button-center-wrapper">
+            <button type="submit" value="login">Log In</button>
+            <button type="button" onclick="location.href='{% url 'signup' %}'">Sign Up</button>
+            <input type="hidden" name="next" value="{{ next }}" </input>
+        </div>
     </form>
 {% endblock %}

@@ -1,8 +1,7 @@
 {% extends 'MEgo/base.html' %}
 
 {% block content %}
-    <h1> Your Cicle of Life </h1>
-    <p> is a sequence of events!</p>
+    <h1> {{ user.nickname }}'s Experience Cicle </h1>
     {% for exp in exps %}
         <div class="exp">
             <h2><a href="{% url 'experience_detail' pk=exp.pk %}">exp date : {{ exp.exp_date }}</a></h2>

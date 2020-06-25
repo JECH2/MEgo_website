@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+import django.contrib.auth.views as views2
+from .forms import CustomUserLoginForm
 
 urlpatterns = [
     path('', views.experience_list, name='experience_list'),
@@ -10,4 +12,9 @@ urlpatterns = [
     path('MEgo/new/questions/', views.new_question, name='new_question'),
     path('support/', views.support, name='support'),
     path('accounts/signup/', views.signup, name='signup'),
+    path('accounts/login/', views2.LoginView.as_view(
+            template_name="registration/login.html",
+            authentication_form=CustomUserLoginForm
+            ),
+         name='login'),
 ]

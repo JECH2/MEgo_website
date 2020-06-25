@@ -8,13 +8,12 @@ from .forms import ExpForm, UserForm
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 
-# Create your views here.
+@login_required
 def experience_list(request):
-    if request.user.is_authenticated and request.user.nickname == 'admin':
+    if request.user.is_authenticated and request.user.user_id == 'admin':
         exps = Experience.objects.order_by('exp_date')
     else:
         exps = Experience.objects.filter(author__exact=request.user.id).order_by('exp_date')
-    # exps = Experience.objects.filter(exp_date__lte=timezone.now()).order_by('exp_date')
     return render(request, 'MEgo/experience_list.html', {'exps':exps})
 
 @login_required
@@ -73,3 +72,4 @@ def signup(request):
         form = UserForm()
 
     return render(request, 'registration/signup.html', {'form': form})
+

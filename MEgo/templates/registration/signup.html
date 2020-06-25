@@ -1,12 +1,25 @@
-{% extends 'MEgo/base.html' %}
+{% extends 'registration/login_base.html' %}
 
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<h2>Sign up</h2>
+  <div class="signup-form">
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign up</button>
+    <div class="form-group">
+    <table>
+      {% for field in form %}
+        <tr>
+          <td><label> {{field.label_tag}}</label></td>
+          <td>{{field}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+    <div class="button-center-wrapper">
+      <button type="submit" class="button">Sign Up</button>
+    </div>
+
   </form>
+  </div>
 {% endblock %}

@@ -1,21 +1,35 @@
 {% load static %}
+{% load widget_tweaks %}
 
 <html>
     <head>
         <title>MEGO</title>
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/MEgo.css    ' %}">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;900&display=swap">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/MEgo.css' %}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;900&display=swap">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     </head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient( at 0% 0%, rgb(143,52,101) 0%, rgb(108,28,71) 50%, rgb(62,38,81) 100%);
+            font-family: 'Catamaran', sans-serif;
+            font-weight: 400;
+            color: white;
+        }
+        h1 {
+            text-align: center;
+            font-size: 50px;
+            margin: 0px;
+        }
+    </style>
     <body>
-        <div class="content container">
-            <div class="row">
-                <div class="registration_content">
-                    {% block content %}
-                    {% endblock %}
-                </div>
-            </div>
+        <div class="content-container">
+            <h1>MEGO</h1>
+            {% block content %}
+            {% endblock %}
         </div>
     </body>
 </html>

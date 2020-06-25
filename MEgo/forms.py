@@ -1,6 +1,7 @@
 from django import forms
 from .models import User, UserManager
 from .models import Experience
+from django.contrib.auth.forms import AuthenticationForm, UsernameField
 
 class ExpForm(forms.ModelForm):
 
@@ -9,12 +10,16 @@ class ExpForm(forms.ModelForm):
         model = Experience
         fields = ['exp_date', 'photo', 'thumbnail_photo', 'media_links', 'event', 'thoughts','emotion','importance']
         widgets = {
-            #'exp_date' : forms.SplitDateTimeWidget({'class':'form-control'}),
-            'media_links' : forms.TextInput(attrs={'class': 'form-control', 'placeholder':'insert some medium(picture, video) as link : https://mego.pythonanywhere.com'}),
-            'event' : forms.TextInput(attrs={'class':'form-control','placeholder':'what happened to you'}),
-            'thoughts' : forms.TextInput(attrs={'class':'form-control','placeholder':'what did you think'}),
-            'emotion' : forms.TextInput(attrs={'class':'form-control','placeholder':'how did you feel'}),
-            'importance' : forms.RadioSelect(attrs=None, choices=IMPORTANCE_CHOICES),
+            #'exp_date' : forms.SplitDateTimeWidget({'class':'custom-form'}),
+            'photo' : forms.ClearableFileInput(attrs={'class':'custom-fileInput-form'}),
+            'thumbnail_photo' : forms.ClearableFileInput(attrs={'class':'custom-fileInput-form'}),
+            'media_links' : forms.TextInput(
+                attrs={'class': 'custom-form',
+                        'placeholder':'insert some medium(picture, video) as link : https://mego.pythonanywhere.com'}),
+            'event' : forms.TextInput(attrs={'class':'custom-form','placeholder':'what happened to you'}),
+            'thoughts' : forms.TextInput(attrs={'class':'custom-form','placeholder':'what did you think'}),
+            'emotion' : forms.TextInput(attrs={'class':'custom-form','placeholder':'how did you feel'}),
+            'importance' : forms.RadioSelect(attrs={'class':'custom-radio-form'}, choices=IMPORTANCE_CHOICES),
         }
 
 class UserForm(forms.ModelForm):
@@ -27,18 +32,30 @@ class UserForm(forms.ModelForm):
         GENDER_CHOICES = [('M', 'Male'),('W', 'Female')]
 
         model = User
-        fields = ['nickname', 'email', 'age', 'gender', 'password']
+        fields = ['nickname', 'email', 'age', 'gender', 'user_id','password']
         widgets = {
-            'nickname': forms.TextInput(attrs={'class': 'custom-form', 'placeholder':'input within 15 characters'}),
+            'nickname': forms.TextInput(attrs={'class': 'custom-form', 'placeholder':'input within 15 characters', 'autofocus': True}),
+            'age': forms.Select(attrs={'class': 'custom-form'}, choices=AGE_CHOICES),
             'email': forms.EmailInput(attrs={'class': 'custom-form', 'placeholder':'example : mego.kaist@gmail.com'}),
+            'gender': forms.RadioSelect(attrs={'class': 'custom-radio-form'}, choices=GENDER_CHOICES),
+            'user_id': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'input within 15 characters'}),
             'password' : forms.PasswordInput(attrs={'class': 'custom-form','placeholder':'within 15 characters'}),
-            'age' : forms.Select(attrs={'class': 'custom-form'}, choices=AGE_CHOICES),
-            'gender' : forms.RadioSelect(attrs=None, choices=GENDER_CHOICES)
         }
+        labels = {
+            'nickname': 'Name',
+            'age':'Age',
+            'email': 'Email',
+            'gender': 'Gender',
+            'user_id': 'ID',
+            'password': 'PW',
+        }
+
     # 글자수 제한
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__( *args, **kwargs)
-        self.fields['nickname'].widget.attrs['maxlength'] = 150
+        self.fields['nickname'].widget.attrs['maxlength'] = 20
+        self.fields['user_id'].widget.attrs['maxlength'] = 20
+        self.label_suffix = ''
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -49,3 +66,15 @@ class UserForm(forms.ModelForm):
             user.save()
         return user
 
+
+class CustomUserLoginForm(AuthenticationForm):
+    username = UsernameField(
+        label='ID',
+        label_suffix='',
+        widget=forms.TextInput(attrs={'autofocus': True}),
+    )
+    password = forms.CharField(
+        label='PW',
+        label_suffix = '',
+        widget=forms.PasswordInput(),
+    )
