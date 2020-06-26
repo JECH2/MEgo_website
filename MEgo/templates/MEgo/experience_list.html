@@ -1,7 +1,26 @@
 {% extends 'MEgo/base.html' %}
+{% load static %}
 
 {% block content %}
-    <h1> {{ user.nickname }}'s Experience Cicle </h1>
+    <script>
+        var global_r = 10;
+    </script>
+    <h1> {{ user.nickname }}'s Experience Circle </h1>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100">
+        {% for exp in exps %}
+            <a xlink:href="{% url 'experience_detail' pk=exp.pk %}">
+            <circle class="shape" id="{{exp.pk}}" cx="50" cy="40" r=10 fill="none" stroke="{{exp.emotion_color}}" stroke-width="1"/></a>
+            <script type="text/javascript">
+                var line_width = {{ exp.importance }};
+                var id = {{ exp.pk }};
+                line_width *= 3;
+                document.getElementById(String(id)).setAttribute("stroke-width",line_width);
+                document.getElementById(String(id)).setAttribute("r",global_r);
+                global_r = global_r + line_width/1.6;
+
+            </script>
+        {% endfor %}
+    </svg>
     {% for exp in exps %}
         <div class="exp">
             <h2><a href="{% url 'experience_detail' pk=exp.pk %}">exp date : {{ exp.exp_date }}</a></h2>
@@ -10,5 +29,13 @@
                 <img src="{{ exp.thumbnail_photo.url }}" width="200" height="120" alt="">
             {% endif %}
         </div>
+
     {% endfor %}
+
+    <script type="text/javascript">
+        function test(){
+            console.log('hello!');
+        };
+    </script>
 {% endblock %}
+

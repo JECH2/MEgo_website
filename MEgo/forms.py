@@ -22,6 +22,29 @@ class ExpForm(forms.ModelForm):
             'importance' : forms.RadioSelect(attrs={'class':'custom-radio-form'}, choices=IMPORTANCE_CHOICES),
         }
 
+class DynamicExpForm(forms.ModelForm):
+    class Meta:
+        IMPORTANCE_CHOICES = [('1','not important'), ('2','important'), ('3', 'very important')]
+        model = Experience
+        fields = ['photo', 'thumbnail_photo', 'media_links', 'event', 'thoughts','emotion','importance']
+        widgets = {
+            'event': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'what happened to you?'}),
+            'thoughts': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'what did you think?'}),
+            'emotion': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'how did you feel?'}),
+            'importance': forms.RadioSelect(attrs={'class': 'custom-radio-form'}, choices=IMPORTANCE_CHOICES),
+            'photo' : forms.ClearableFileInput(attrs={'class':'custom-fileInput-form'}),
+            'thumbnail_photo' : forms.ClearableFileInput(attrs={'class':'custom-fileInput-form'}),
+            'media_links' : forms.TextInput(
+                attrs={'class': 'custom-form',
+                        'placeholder':'insert some medium(picture, video) as link : https://mego.pythonanywhere.com'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        #self.skipped_category = kwargs.pop('skipped_category', None)
+        super(DynamicExpForm, self).__init__(*args, **kwargs)
+        #self.fields[self.skipped_category].widget = forms.HiddenInput()
+        self.label_suffix = ''
+
 class UserForm(forms.ModelForm):
     # # widget을 오버라이드하여 입력될때 *표시를 찍어준다
     # password = forms.CharField(label='Password', widget=forms.PasswordInput)

@@ -196,3 +196,22 @@ h1, h2, h3, h4 {
  :-ms-input-placeholder {
     color: rgba(255, 255, 255, .5);
  }
+
+:root {
+    --color-1: #6e40aa;
+    --color-2: #4c6edb;
+    --color-3: #24aad8;
+    --color-4: #1ac7c2;
+    --color-5: #1ddea3;
+  }
+
+.shape {
+  animation: moveCircle 1250ms ease-in-out
+}
+
+
+@keyframes moveCircle {
+  from {
+      r:0;
+  }
+}

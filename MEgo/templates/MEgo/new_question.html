@@ -4,5 +4,9 @@
     <div>
         <h1>Question Page</h1>
         <p>If you don't want to put your story on diary, just answer simple daily question!</p>
+        <a href="{% url 'new_question' %}">Skip</a>
+        <p>{{q.pk}}th question</p>
+        <p>{{q.content}}</p>
+        <a href="{% url 'experience_new_by_question' pk=q.pk %}">Answer</a>
     </div>
 {% endblock %}

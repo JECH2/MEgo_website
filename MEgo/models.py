@@ -70,14 +70,38 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.user_id
 
+class EmotionColor(models.Model):
+    color_name = models.CharField(max_length=200) # content of question
+    emotion = models.CharField(max_length=200) # event, thoughts, emotion
+    r = models.IntegerField()
+    g = models.IntegerField()
+    b = models.IntegerField()
+    a = models.FloatField()
 
+# questions of daily life
 # example : if question is "What makes you happy?",
 # data is stored as (What makes you happy?, emotion, angry)
-class Questions(models.Model):
+class ExpQuestions(models.Model):
     content = models.CharField(max_length=200) # content of question
     question_area = models.CharField(max_length=200) # event, thoughts, emotion
     related_tags = models.CharField(max_length=200)
 
+# questions of life
+class LifeQuestions(models.Model):
+    content = models.CharField(max_length=200) # content of question
+    question_area = models.CharField(max_length=200) # one of life I wish
+    related_tags = models.CharField(max_length=200)
+    answer_area = models.CharField(max_length=200)
+
+# 가치관
+class LifeIWish(models.Model):
+    input_date = models.DateTimeField(default=timezone.now)
+    life_values = models.TextField(max_length=200, blank=True, null=True)
+    priority = models.TextField(max_length=200, blank=True, null=True)
+    ideal_person = models.TextField(max_length=200, blank=True, null=True)
+    life_goals = models.TextField(max_length=200, blank=True, null=True)
+    year_of_the_goal = models.CharField(max_length=200, blank=True, null=True) # 2012 in String
+    goal_of_the_year = models.TextField(blank=True, null=True) # 올해의 목표 등
 
 # This function is needed for uploading user's data
 def user_path(instance, filename): #param instance is meaning for model, filename is the name of uploaded file
@@ -118,6 +142,7 @@ class Experience(models.Model):
     photo = models.ImageField(blank=True,upload_to=user_path)  # path based on the function and settings
     thumbnail_photo = models.ImageField(blank=True, upload_to=user_path) # it is not required field
     media_links = models.TextField(blank=True, null=True)
+    emotion_color = models.CharField(max_length=100, default="", blank=True, null=True)
 
     def publish(self):
         self.save()
