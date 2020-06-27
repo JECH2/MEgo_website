@@ -1,0 +1,25 @@
+color name,emotion,r,g,b,a
+red1,rage,210,97,98,1
+red2,anger,210,97,98,0.7
+red3,annoyance,210,97,98,0.4
+ora1,vigilance,225,146,79,1
+ora2,anticipation,225,146,79,0.7
+ora3,interest,225,146,79,0.4
+yel1,ecstasy,238,197,97,1
+yel2,joy,238,197,97,0.7
+yel3,serenity,238,197,97,0.4
+ygr1,admiration,74,155,88,1
+ygr2,trust,74,155,88,0.7
+ygr3,acceptance,74,155,88,0.4
+gre1,terror,74,155,88,1
+gre2,fear,74,155,88,0.7
+gre3,apprehension,74,155,88,0.4
+tor1,amazement,64,144,188,1
+to2,surprise,64,144,188,0.7
+tor3,distraction,64,144,188,0.4
+blu1,grief,65,125,180,1
+blu2,sadness,65,125,180,0.7
+blu3,pensiveness,65,125,180,0.4
+pur1,loathing,127,113,167,1
+pur2,disgust,127,113,167,0.7
+pur3,boredom,127,113,167,0.4

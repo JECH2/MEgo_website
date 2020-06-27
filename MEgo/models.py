@@ -1,3 +1,5 @@
+# our data frames are defined in here
+
 from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -70,6 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.user_id
 
+# color of emotion
 class EmotionColor(models.Model):
     color_name = models.CharField(max_length=200) # content of question
     emotion = models.CharField(max_length=200) # event, thoughts, emotion
@@ -93,15 +96,15 @@ class LifeQuestions(models.Model):
     related_tags = models.CharField(max_length=200)
     answer_area = models.CharField(max_length=200)
 
-# 가치관
+# data structure for recording life I wish
 class LifeIWish(models.Model):
     input_date = models.DateTimeField(default=timezone.now)
     life_values = models.TextField(max_length=200, blank=True, null=True)
     priority = models.TextField(max_length=200, blank=True, null=True)
     ideal_person = models.TextField(max_length=200, blank=True, null=True)
     life_goals = models.TextField(max_length=200, blank=True, null=True)
-    year_of_the_goal = models.CharField(max_length=200, blank=True, null=True) # 2012 in String
-    goal_of_the_year = models.TextField(blank=True, null=True) # 올해의 목표 등
+    year_of_the_goal = models.CharField(max_length=200, blank=True, null=True) # 2020 in String
+    goal_of_the_year = models.TextField(blank=True, null=True) # goals of this year
 
 # This function is needed for uploading user's data
 def user_path(instance, filename): #param instance is meaning for model, filename is the name of uploaded file
@@ -129,7 +132,7 @@ class Experience(models.Model):
     distance = models.FloatField(blank=True, null=True)
     # Mental Data
     event = models.TextField()
-    thoughts = models.TextField(blank=True, null=True)
+    thoughts = models.TextField()
     emotion = models.TextField()
     # emotion_intensity = models.IntegerField()
     importance = models.IntegerField()
@@ -142,6 +145,7 @@ class Experience(models.Model):
     photo = models.ImageField(blank=True,upload_to=user_path)  # path based on the function and settings
     thumbnail_photo = models.ImageField(blank=True, upload_to=user_path) # it is not required field
     media_links = models.TextField(blank=True, null=True)
+
     emotion_color = models.CharField(max_length=100, default="", blank=True, null=True)
 
     def publish(self):

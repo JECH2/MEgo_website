@@ -1,16 +1,21 @@
 {% extends 'MEgo/base.html' %}
+{% load static %}
 
 {% block content %}
     <form method="POST" class="exp-form" enctype="multipart/form-data">{% csrf_token %}
         <div class="form-group-exp">
-            <h1>New | Edit Diary</h1>
-            {% for field in form %}
-              <p><label> {{field.label_tag}}</label></p>
-              <p>{{field}}</p>
-            {% endfor %}
+            <h1>Diary</h1>
+            <table>
+                {% for field in form %}
+                    <tr>
+                      <td><label> {{field.label_tag}}</label></td>
+                      <td>{{field}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
             <div class="button-center-wrapper-exp">
                 <button type="submit" class="button">Save</button>
             </div>
-        </div>
     </form>
 {% endblock %}

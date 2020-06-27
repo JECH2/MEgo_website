@@ -1,79 +1,106 @@
+# views.py manages page rendering : dynamic!
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from .models import Experience, User, ExpQuestions, EmotionColor
-from .forms import ExpForm, DynamicExpForm, UserForm
+from .models import *
+from .forms import *
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+
+from formtools.wizard.views import SessionWizardView
+
 from random import randint
+from .color import emo_to_hex
 
-def rgb_to_hex(r, g, b):
-    r, g, b = int(r), int(g), int(b)
-    return '#' + hex(r)[2:].zfill(2) + hex(g)[2:].zfill(2) + hex(b)[2:].zfill(2)
 
-# from emotion list to overall hexcode
-def emo_to_hex(parsed_emotion):
-    n = len(parsed_emotion)
-    r = 0
-    g = 0
-    b = 0
-    for emo in parsed_emotion:
-        color = EmotionColor.objects.get(emotion__exact=emo)
-        r = r + color.r / n
-        g = g + color.g / n
-        b = b + color.b / n
-    return rgb_to_hex(r, g, b)
-
+# for rendering page of experience list : circle of experience
 @login_required
 def experience_list(request):
     if request.user.is_authenticated and request.user.user_id == 'admin':
         exps = Experience.objects.order_by('exp_date')
     else:
         exps = Experience.objects.filter(author__exact=request.user.id).order_by('exp_date')
-    emotion_color = EmotionColor.objects.all()
     return render(request, 'MEgo/experience_list.html', {'exps':exps})
 
+# for rendering page of seeing detail of experience
 @login_required
 def experience_detail(request, pk):
     exp = get_object_or_404(Experience, pk=pk)
     return render(request, 'MEgo/experience_detail.html', {'exp':exp})
 
-
+# for rendering page of recording new experience
 @login_required
 def experience_new(request):
-    # 폼에 데이터를 받은 상황
+    # when user clicked submit button
     if request.method == "POST":
         form = ExpForm(request.POST, request.FILES)
         if form.is_valid():
             exp = form.save(commit=False)
             exp.author = request.user
+            # emotion_color is added directly from emotion
             parsed_emotion = exp.emotion.strip().split(',')
             exp.emotion_color = emo_to_hex(parsed_emotion)
+
             exp.save()
             return redirect('experience_detail', pk=exp.pk)
     else:
-        form = ExpForm() # 폼 저장 전
+        # for the first time
+        form = ExpForm()
     return render(request, 'MEgo/experience_edit.html', {'form': form})
 
+
+class ExpFormWizardView(SessionWizardView):
+    form_list = [ExpFormStepOne, ExpFormStepTwo, ExpFormStepThree]
+
+    def get_template_names(self):
+        return ['Diary/step_{0}_template.html'.format(self.steps.current)]
+
+    def get_context_data(self, form, **kwargs):
+        context = super(ExpFormWizardView, self).get_context_data(form=form, **kwargs)
+        emotioncolor = EmotionColor.objects.all()
+        if self.steps.current == 'my_step_name':
+            context.update({'emotioncolor': emotioncolor})
+        return context
+
+    def done(self, form_list, **kwargs):
+        exp = Experience()
+        for form in form_list:
+            for field, value in form.cleaned_data.items():
+                #print(field, value)
+                setattr(exp, field, value)
+        exp.author = self.request.user
+        # emotion_color is added directly from emotion
+        parsed_emotion = exp.emotion.strip().split(',')
+        exp.emotion_color = emo_to_hex(parsed_emotion)
+        exp.save()
+        return redirect('/')
+
+# for rendering page of editing existing experience
 @login_required
 def experience_edit(request, pk):
     exp = get_object_or_404(Experience, pk=pk)
     if request.method == "POST":
+        # when user clicked submit button
         form = ExpForm(request.POST, request.FILES, instance=exp)
         if form.is_valid():
             exp = form.save(commit=False)
             exp.author = request.user
+            # emotion_color is added directly from emotion
             parsed_emotion = exp.emotion.strip().split(',')
             exp.emotion_color = emo_to_hex(parsed_emotion)
             exp.save()
             return redirect('experience_detail', pk=exp.pk)
     else:
+        # for the first time
         form = ExpForm(instance=exp)
     return render(request, 'MEgo/experience_edit.html', {'form': form})
 
-
+# view of experience editing from question
+# another type of view : not function view, class view
+# for dynamic field change
 class NewExpbyQView(CreateView):
     model = Experience
     template_name = 'MEgo/experience_edit.html'
@@ -93,6 +120,9 @@ class NewExpbyQView(CreateView):
 
         return kwargs
 
+# for rendering another view of experience by question
+# when user choose question,
+# related field with the question is automatically filled in the form
 @login_required
 def experience_new_by_question(request, pk):
     q = None
@@ -116,10 +146,12 @@ def experience_new_by_question(request, pk):
 
     return render(request, 'MEgo/experience_edit.html', {'form': form})
 
+# for rendering page of analysis report page
 @login_required
 def analysis_report(request):
     return render(request, 'MEgo/analysis_report.html')
 
+# for rendering page of getting new question when skip button or page refresh is clicked
 @login_required
 def new_question(request):
     random_number = randint(1, ExpQuestions.objects.count() + 1)  # 전체 question 중 하나를 랜덤으로 숫자를 고름
@@ -128,20 +160,18 @@ def new_question(request):
     print(q)
     return render(request, 'MEgo/new_question.html', {'q':q})
 
-
+# for rendering page of support page
 def support(request):
     return render(request, 'support.html')
 
+# for rendering page of sign up
 def signup(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
-    # 모델폼의 유효성 검증이 valid할 경우, DB에 저장
         if form.is_valid():
             user_instance = form.save()
             login(request, user_instance)
         return render(request, 'registration/signup_complete.html', {'id' : id })
-
-# HTTP Method가 GET 인 경우
     else:
         form = UserForm()
 

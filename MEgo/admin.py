@@ -1,3 +1,5 @@
+# in admin.py, Models should be added
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Experience, User, ExpQuestions, LifeQuestions, LifeIWish, EmotionColor

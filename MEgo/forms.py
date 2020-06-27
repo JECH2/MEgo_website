@@ -1,10 +1,66 @@
+# forms to get user's input
+
 from django import forms
 from .models import User, UserManager
-from .models import Experience
+from .models import Experience, EmotionColor
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
+from .color import emo_to_hex
+
+class ExpFormStepOne(forms.ModelForm):
+    class Meta:
+        model = Experience
+        fields = ['exp_date', 'event', 'related_people', 'related_place', 'media_links']
+        widgets = {
+            'exp_date': forms.TextInput(attrs={'class':'custom-form','placeholder':'When did it happen?'}),
+            'event' : forms.TextInput(attrs={'class':'custom-form','placeholder':'What happened?'}),
+            'related_people': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Who were you with?'}),
+            'related_place': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Where did it happen?'}),
+            #'photo' : forms.ClearableFileInput(attrs={'class':'custom-fileInput-form'}),
+            'media_links' : forms.TextInput(
+                attrs={'class': 'custom-form',
+                        'placeholder':'insert some medium(picture, video) as link : https://mego.pythonanywhere.com'}),
+        }
+        labels = {
+            'exp_date':'Date',
+            'event':'Event',
+            'related_people': 'People',
+            'related_place': 'Location',
+            'media_links': 'Videos',
+        }
+    def __init__(self, *args, **kwargs):
+        super(ExpFormStepOne, self).__init__(*args, **kwargs)
+        self.label_suffix = ''
+
+class ExpFormStepTwo(forms.ModelForm):
+    class Meta:
+        model = Experience
+        fields = ['thoughts','emotion']
+        widgets = {
+            'thoughts' : forms.TextInput(attrs={'class':'custom-form','placeholder':'What did you think'}),
+            'emotion' : forms.CheckboxSelectMultiple(attrs={'class': 'custom-checkbox-form', 'placeholder':'How did you feel?'}, choices=[(item.emotion,emo_to_hex([item.emotion])) for item in EmotionColor.objects.all()]),
+        }
+        labels = {
+            'thoughts':'Thoughts',
+            'emotion':'Emotions',
+        }
+    def __init__(self, *args, **kwargs):
+        super(ExpFormStepTwo, self).__init__(*args, **kwargs)
+        self.label_suffix = ''
+
+class ExpFormStepThree(forms.ModelForm):
+    class Meta:
+        IMPORTANCE_CHOICES = [('1','not important'), ('2','important'), ('3', 'very important')]
+        model = Experience
+        fields = ['importance']
+        widgets = {
+            'importance' : forms.RadioSelect(attrs={'class':'custom-radio-form'}, choices=IMPORTANCE_CHOICES),
+        }
+    def __init__(self, *args, **kwargs):
+        super(ExpFormStepThree, self).__init__(*args, **kwargs)
+        self.label_suffix = ''
+
 
 class ExpForm(forms.ModelForm):
-
     class Meta:
         IMPORTANCE_CHOICES = [('1','not important'), ('2','important'), ('3', 'very important')]
         model = Experience
@@ -18,9 +74,16 @@ class ExpForm(forms.ModelForm):
                         'placeholder':'insert some medium(picture, video) as link : https://mego.pythonanywhere.com'}),
             'event' : forms.TextInput(attrs={'class':'custom-form','placeholder':'what happened to you'}),
             'thoughts' : forms.TextInput(attrs={'class':'custom-form','placeholder':'what did you think'}),
-            'emotion' : forms.TextInput(attrs={'class':'custom-form','placeholder':'how did you feel'}),
+            'emotion' : forms.CheckboxSelectMultiple(attrs={'class': 'custom-checkbox-form'}, choices=[(item.emotion, item.emotion) for item in EmotionColor.objects.all()]),
+            #'emotion' : forms.TextInput(attrs={'class':'custom-form','placeholder':'how did you feel'}),
             'importance' : forms.RadioSelect(attrs={'class':'custom-radio-form'}, choices=IMPORTANCE_CHOICES),
         }
+    def __init__(self, *args, **kwargs):
+        #self.skipped_category = kwargs.pop('skipped_category', None)
+        super(ExpForm, self).__init__(*args, **kwargs)
+        #self.fields[self.skipped_category].widget = forms.HiddenInput()
+        self.label_suffix = ''
+
 
 class DynamicExpForm(forms.ModelForm):
     class Meta:
@@ -89,7 +152,7 @@ class UserForm(forms.ModelForm):
             user.save()
         return user
 
-
+# custom user login form
 class CustomUserLoginForm(AuthenticationForm):
     username = UsernameField(
         label='ID',

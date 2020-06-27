@@ -6,7 +6,7 @@
         <title>MEGO</title>
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="{% static 'css/MEgo.css' %}">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;900&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;900&display=swap">
     <style>
         body {
             background: rgb(229,211,221);
@@ -24,8 +24,8 @@
                     <li><a> Hello, {{ user.nickname }}!</a></li>
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                     <li><a href="{% url 'new_question' %}">New_question</a></li>
-                    <li><a href="{% url 'experience_new' %}">Experience_new</a></li>
-                    <li><a href="{% url 'analysis_report' %}">Analysis_report</a></li>
+                    <li><a href="{% url 'experience_new_m' %}"><img src="{% static "../../static/Icons/+.png" %}" width="50" height="50"></a></li>
+                    <li><a href="{% url 'analysis_report' %}"><img src="{% static "../../static/Icons/megosymbol.png" %}" width="50" height="50"></a></li>
                     <li><a href="{% url 'support' %}">Support</a></li>
                 </ul>
             </nav>

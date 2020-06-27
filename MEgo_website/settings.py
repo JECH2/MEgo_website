@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'MEgo', # our app
     'widget_tweaks', # for custom form design
+    'formtools',# for multiple page form
 ]
 
 MIDDLEWARE = [
