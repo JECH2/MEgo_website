@@ -10,7 +10,7 @@ from django.db import models
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(self, user_id, email, age, gender, nickname, password=None):
+    def create_user(self, user_id, email, age, gender, nickname, password):
         if not (email):
             raise ValueError('must have user email')
         user = self.model(

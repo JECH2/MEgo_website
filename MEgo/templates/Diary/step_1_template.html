@@ -19,24 +19,24 @@
           {% comment %} <td>How did you feel?</td> {%endcomment %}
       </tr>
   </table>
-                  <div class="custom-checkbox-form">
-              <table>
-                {% for field in wizard.form.emotion %}
-                {% cycle '<tr>' '' '' '' '' '' '' '' %}
-                  <td>
-                    <input type="checkbox" id="{{ field.id_for_label }}"
-                      name="{{ field.data.name }}" value="{{ field.data.value }}">
-                      <label for="{{ field.id_for_label }}" style="background-color:{{ field.data.label }}">{{ field.data.value }}</label>
-                  </td>
-                  {% cycle '' '' '' '' '' '' '' '</tr>' %}
-                {% endfor %}
-              </table>
-              </div>
+    <div class="custom-checkbox-form">
+        <table>
+            {% for field in wizard.form.emotion %}
+            {% cycle '<tr>' '' '' '' '' '' '' '' %}
+            <td>
+                <input type="checkbox" id="{{ field.id_for_label }}"
+                       name="{{ field.data.name }}" value="{{ field.data.value }}">
+                <label for="{{ field.id_for_label }}" style="background-color:{{ field.data.label }}">{{ field.data.value }}</label>
+            </td>
+            {% cycle '' '' '' '' '' '' '' '</tr>' %}
+            {% endfor %}
+        </table>
+    </div>
   <div class="button-center-wrapper-exp">
   {% if wizard.steps.prev %}
     <button class="button" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% trans "Prev" %}</button>
   {% endif %}
-    <button class="button" type="submit" value="{% trans "submit" %}">Submit</button>
+    <button class="button" type="submit" value="{% trans "submit" %}">Next</button>
   </div>
 </form>
 </div>

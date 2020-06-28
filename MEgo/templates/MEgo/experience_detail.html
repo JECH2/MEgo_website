@@ -4,7 +4,8 @@
 {% block content %}
     <div class="exp">
         <h2>{{ exp.exp_date }}</h2>
-        <a class="btn btn-default" href="{% url 'experience_edit' pk=exp.pk %}">edit</a>
+        <a href="{% url 'experience_edit' pk=exp.pk %}">edit</a>
+        <a href="{% url 'experience_delete' pk=exp.pk %}">delete</a>
         <p>{{ exp.event|linebreaksbr }}</p>
         {% if exp.thumbnail_photo %}
             <img src="{{ exp.thumbnail_photo.url }}" alt="">

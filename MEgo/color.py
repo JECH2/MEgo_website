@@ -18,7 +18,6 @@ def emo_to_hex(parsed_emotion):
         text_re = re.compile("\w+")
         preprocessed_emo = re.findall(text_re,emo)[0]
         color = EmotionColor.objects.get(emotion__exact=preprocessed_emo)
-        print('hello', preprocessed_emo)
         r = r +  (color.r * color.a + 255 * (1 - color.a)) / n
         g = g + (color.g * color.a + 255 * (1 - color.a)) / n
         b = b + (color.b * color.a + 255 * (1 - color.a)) / n

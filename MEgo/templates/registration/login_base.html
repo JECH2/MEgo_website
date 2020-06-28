@@ -4,10 +4,8 @@
 <html>
     <head>
         <title>MEGO</title>
-        <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="{% static 'css/MEgo.css' %}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;900&display=swap">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     </head>
     <style>
         body {
@@ -24,12 +22,16 @@
             font-size: 50px;
             margin: 0px;
         }
+        a {
+            text-align:center;
+        }
     </style>
     <body>
         <div class="content-container">
             <h1>MEGO</h1>
             {% block content %}
             {% endblock %}
+            <a href="{% url 'support' %}"><center>What is MEGO?</center></a>
         </div>
     </body>
 </html>

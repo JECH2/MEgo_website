@@ -7,9 +7,12 @@ import django.contrib.auth.views as views2
 from .forms import *
 
 urlpatterns = [
-    path('', views.experience_list, name='experience_list'),
+    path('', views.experience_circle, name='experience_circle'),
+    path('MEgo/exp_list', views.experience_as_list, name='experience_as_list'),
+    path('MEgo/socialmap/', views.social_map, name='social_map'),
     path('MEgo/<int:pk>/', views.experience_detail, name='experience_detail'),
     path('MEgo/new/', views.experience_new, name='experience_new'),
+    path('MEgo/<int:pk>/delete/', views.experience_delete, name='experience_delete'),
     path('MEgo/<int:pk>/edit/', views.experience_edit, name='experience_edit'),
     #path('MEgo/<int:pk>/edit/', views.NewExpbyQView.as_view(), name='experience_edit'),
     path('MEgo/new_m/', views. ExpFormWizardView.as_view([ExpFormStepOne, ExpFormStepTwo, ExpFormStepThree]), name='experience_new_m'),

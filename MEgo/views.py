@@ -15,15 +15,24 @@ from formtools.wizard.views import SessionWizardView
 from random import randint
 from .color import emo_to_hex
 
-
-# for rendering page of experience list : circle of experience
+# for rendering page of experience circle
 @login_required
-def experience_list(request):
+def experience_circle(request):
+    if request.user.is_authenticated and request.user.user_id == 'admin':
+        return experience_as_list(request)
+    else:
+        exps = Experience.objects.filter(author__exact=request.user.id).order_by('exp_date')
+    return render(request, 'MEgo/experience_circle.html', {'exps':exps})
+
+
+# for rendering page of experience as list
+@login_required
+def experience_as_list(request):
     if request.user.is_authenticated and request.user.user_id == 'admin':
         exps = Experience.objects.order_by('exp_date')
     else:
-        exps = Experience.objects.filter(author__exact=request.user.id).order_by('exp_date')
-    return render(request, 'MEgo/experience_list.html', {'exps':exps})
+        exps = Experience.objects.filter(author__exact=request.user.id).order_by('exp_date').reverse()
+    return render(request, 'MEgo/experience_as_list.html', {'exps':exps})
 
 # for rendering page of seeing detail of experience
 @login_required
@@ -57,13 +66,6 @@ class ExpFormWizardView(SessionWizardView):
 
     def get_template_names(self):
         return ['Diary/step_{0}_template.html'.format(self.steps.current)]
-
-    def get_context_data(self, form, **kwargs):
-        context = super(ExpFormWizardView, self).get_context_data(form=form, **kwargs)
-        emotioncolor = EmotionColor.objects.all()
-        if self.steps.current == 'my_step_name':
-            context.update({'emotioncolor': emotioncolor})
-        return context
 
     def done(self, form_list, **kwargs):
         exp = Experience()
@@ -101,6 +103,7 @@ def experience_edit(request, pk):
 # view of experience editing from question
 # another type of view : not function view, class view
 # for dynamic field change
+@login_required
 class NewExpbyQView(CreateView):
     model = Experience
     template_name = 'MEgo/experience_edit.html'
@@ -142,9 +145,20 @@ def experience_new_by_question(request, pk):
             form = ExpForm() #normal case
         else:
             # fill form based on pre-defined tags
-            form = DynamicExpForm(initial={q.question_area: q.related_tags})
+            form = ExpForm(initial={q.question_area: q.related_tags})
 
     return render(request, 'MEgo/experience_edit.html', {'form': form})
+
+# for rendering page of delete a experience
+def experience_delete(request, pk):
+    exp = get_object_or_404(Experience, pk=pk)
+    exp.delete()
+    return redirect('experience_circle')
+
+# for rendering page of social map page
+@login_required
+def social_map(request):
+    return render(request, 'MEgo/social_map.html')
 
 # for rendering page of analysis report page
 @login_required
@@ -169,6 +183,8 @@ def signup(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
+            print('is valid form')
+            print(form)
             user_instance = form.save()
             login(request, user_instance)
         return render(request, 'registration/signup_complete.html', {'id' : id })
