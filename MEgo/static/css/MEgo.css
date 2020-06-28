@@ -329,6 +329,22 @@ h1, h2, h3, h4 {
     margin: 1%;
 }
 
+.physical-content {
+    width: 96%;
+    height: 90%;
+    background-color: purple;
+    margin: 1%;
+    display: inline-flex;
+    /* Main axis is horizontal */
+    flex-direction: column;
+    /* Items get cluttered to one another rather than to be wrapped */
+    flex-wrap: nowrap;
+    /* Main axis alginment */
+    justify-content: space-evenly;
+    /* Sub axis alingment */
+    align-items: center;
+}
+
 .mental-content {
     width: 96%;
     height: 90%;
@@ -410,13 +426,37 @@ h1, h2, h3, h4 {
 /* Life I wish to live */
 .wish-life {
     width: 98%;
-    height: 10%;
+    height: 20%;
     background-color: red;
+}
+
+.wish-life > .life-value-goal {
+    width: 96%;
+    height: 83%;
+    background-color: blue;
+    margin: 1%;
+    display: inline-flex;
+    /* Main axis is horizontal */
+    flex-direction: row;
+    /* Items get cluttered to one another rather than to be wrapped */
+    flex-wrap: nowrap;
+    /* Main axis alginment */
+    justify-content: space-evenly;
+    /* Sub axis alingment */
+    align-items: center;
+}
+
+.life-value-goal > .life-value .life-goal {
+    width: 48%;
+    height: 90%;
+    background-color: orange;
+    margin-right: 1%;
+    margin-left: 1%;
 }
 
 /* MEGO recommendation */
 .recommendation {
     width: 98%;
-    height: 45%;
+    height: 33%;
     background-color: red;
 }
