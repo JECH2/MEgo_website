@@ -18,8 +18,8 @@
         </tr>
         </table>
         <div class="button-center-wrapper">
-            <button type="submit" value="login">Log In</button>
             <button type="button" onclick="location.href='{% url 'signup' %}'">Sign Up</button>
+            <button type="submit" value="login">Log In</button>
             <input type="hidden" name="next" value="{{ next }}" </input>
         </div>
     </form>

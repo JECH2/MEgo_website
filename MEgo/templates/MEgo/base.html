@@ -21,8 +21,10 @@
             <h1 id="logo"><a href="{% url 'experience_circle' %}"><img src="{% static "Icons/Mego_color.png" %}" height="50"></a></h1>
             <nav>
                 <ul class="top-menu">
+                    {% if user.is_authenticated %}
                     <li><a>{{ user.nickname }}'s MEGO</a></li>
                     <li><a href="{% url 'logout' %}">LOGOUT</a></li>
+                    {% endif %}
                     <li><a href="{% url 'analysis_report' %}"><img src="{% static "Icons/megosymbol.png" %}" width="50" height="50"></a></li>
                 </ul>
             </nav>

@@ -2,6 +2,10 @@
 {% load static %}
 
 {% block content %}
+        {{ form.media.css }}
+    <style>
+        input, select {width: 100%}
+    </style>
     <form method="POST" class="exp-form" enctype="multipart/form-data">{% csrf_token %}
         <div class="form-group-exp">
             <h1>Diary</h1>
@@ -14,6 +18,8 @@
                 {% endfor %}
             </table>
             </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {{ form.media.js }}
             <div class="button-center-wrapper-exp">
                 <button type="submit" class="button">Save</button>
             </div>

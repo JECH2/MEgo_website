@@ -5,6 +5,8 @@ from .models import User, UserManager
 from .models import Experience, EmotionColor
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from .color import emo_to_hex
+from django_select2 import forms as s2forms
+from django.utils.encoding import force_str
 
 class ExpFormStepOne(forms.ModelForm):
     class Meta:
@@ -62,6 +64,17 @@ class ExpFormStepThree(forms.ModelForm):
         super(ExpFormStepThree, self).__init__(*args, **kwargs)
         self.label_suffix = ''
 
+class TestWidget(s2forms.ModelSelect2MultipleWidget):
+    #model = EmotionColor
+    queryset = EmotionColor.objects.only('emotion')
+    #query_set = [item.emotion for item in EmotionColor.objects.all()]
+    search_fields = [
+        "emotion__icontains",
+    ]
+
+    def label_from_instance(self, obj):
+        return force_str(obj.emotion)
+
 
 class ExpForm(forms.ModelForm):
     class Meta:
@@ -78,7 +91,8 @@ class ExpForm(forms.ModelForm):
                         'placeholder':'insert some medium(picture, video) as link : https://mego.pythonanywhere.com'}),
             'event' : forms.TextInput(attrs={'class':'custom-form','placeholder':'what happened to you'}),
             'thoughts' : forms.TextInput(attrs={'class':'custom-form','placeholder':'what did you think'}),
-            'emotion' : forms.TextInput(attrs={'class':'custom-form','placeholder':'how did you feel'}),
+            'emotion' : TestWidget,
+            #'emotion' : forms.TextInput(attrs={'class':'custom-form','placeholder':'how did you feel'}),
             'importance' : forms.RadioSelect(attrs={'class':'custom-radio-form-default'}, choices=IMPORTANCE_CHOICES),
         }
         labels = {
@@ -138,7 +152,7 @@ class UserForm(forms.ModelForm):
             'nickname': forms.TextInput(attrs={'class': 'custom-form', 'placeholder':'input within 15 characters', 'autofocus': True}),
             'age': forms.Select(attrs={'class': 'custom-form'}, choices=AGE_CHOICES),
             'email': forms.EmailInput(attrs={'class': 'custom-form', 'placeholder':'example : mego.kaist@gmail.com'}),
-            'gender': forms.RadioSelect(attrs={'class': 'custom-radio-form'}, choices=GENDER_CHOICES),
+            'gender': forms.RadioSelect(attrs={'class': 'custom-radio-form-default'}, choices=GENDER_CHOICES),
             'user_id': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'input within 15 characters'}),
             'password' : forms.PasswordInput(attrs={'class': 'custom-form','placeholder':'within 15 characters'}),
         }
