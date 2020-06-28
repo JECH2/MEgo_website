@@ -22,7 +22,7 @@
 }
 
 .content {
-    
+
 }
 
 
@@ -433,7 +433,7 @@ h1, h2, h3, h4 {
 
 .wish-life > .life-value-goal {
     width: 96%;
-    height: 83%;
+    height: 50%;
     background-color: blue;
     margin: 1%;
     display: inline-flex;
@@ -447,7 +447,7 @@ h1, h2, h3, h4 {
     align-items: center;
 }
 
-.life-value-goal > .life-value .life-goal {
+.life-value-goal > div {
     width: 48%;
     height: 90%;
     background-color: orange;
@@ -455,9 +455,79 @@ h1, h2, h3, h4 {
     margin-left: 1%;
 }
 
+.life-value > div {
+    width: 96%;
+    height: 45%;
+    background-color: purple;
+    margin: 1%;
+    display: inline-flex;
+    /* Main axis is horizontal */
+    flex-direction: column;
+    /* Items get cluttered to one another rather than to be wrapped */
+    flex-wrap: nowrap;
+    /* Sub axis alingment */
+    align-items: center;
+}
+
+.wish-life > .goals-by-years {
+    width: 96%;
+    height: 30%;
+    background-color: blue;
+    margin: 1%;
+    display: inline-flex;
+    /* Main axis is horizontal */
+    flex-direction: row;
+    /* Items get cluttered to one another rather than to be wrapped */
+    flex-wrap: nowrap;
+    /* Main axis alginment */
+    justify-content: space-evenly;
+    /* Sub axis alingment */
+    align-items: center;
+}
+
+.goals-by-years > div {
+    width: 25%;
+    height: 90%;
+    background-color: orange;
+    margin: 1%;
+}
+
 /* MEGO recommendation */
 .recommendation {
     width: 98%;
     height: 33%;
     background-color: red;
+}
+
+.recommendation > .overall-advice {
+    width: 96%;
+    height: 30%;
+    background-color: blue;
+    margin: 1%;
+}
+
+.recommendation > .recommended-contents-wrapper {
+    width: 96%;
+    height: 60%;
+    background-color: blue;
+    margin: 1%;
+    display: inline-flex;
+    /* Main axis is horizontal */
+    flex-direction: column;
+    /* Items get cluttered to one another rather than to be wrapped */
+    flex-wrap: nowrap;
+    /* Main axis alginment */
+    align-items: space-evenly;
+}
+
+.recommended-contents-wrapper > div {
+    width: 98%;
+    height: 90%;
+    background-color: orange;
+    margin: 1%;
+}
+
+.recommended-contents-wrapper h2 {
+    text-align: left;
+    margin-left: 10px;
 }
