@@ -2,17 +2,57 @@
 {% load static %}
 
 {% block content %}
-    <div>
-        <h1>Summary of {{ user.nickname }}</h1>
-        <p>You are perfect.</p>
-    </div>
-    <div>
-        <h1>Ideal vs Reality</h1>
-        <p>You are perfect.</p>
+<div class="report-wrapper">
+    <!-- Current life -->
+    <div class="my-life">
+        <!-- H1 heading -->
+        <h1>My Life</h1>
+
+        <!-- Physical-Mental-Social report -->
+        <div class="physical-mental-social">
+            <!-- Physical report -->
+            <div class="physical">
+                <h2>Physical</h2>
+            </div>
+
+            <!-- Mental report -->
+            <div class="mental">
+                <h2>Mental</h2>
+                <!-- 3 divs -->
+            </div>
+
+            <!-- Social report -->
+            <div class="social">
+                <h2>Social</h2>
+            </div>
+        </div>
+
+        <!-- Word cluster overview -->
+        <div class="experience-overview">
+            <!-- H2 heading -->
+            <h2>Experience Overview</h2>
+            
+            <!-- Word clutering and description -->
+            <div class="cluster-description">
+                <!-- Word clustering -->
+                <div class="word-clustering"></div>
+
+                <!-- Word clustering description -->
+                <div class="description"></div>
+            </div>
+        </div>
     </div>
 
-    <div>
-        <h1>Recommendations</h1>
-        <p>You are perfect. So There's no recommendations.</p>
+    <!-- Life I wish to live -->
+    <div class="wish-life">
+        <!-- H1 heading -->
+        <h1>Life I Wish to Live</h1>
     </div>
+
+    <!-- MEGO recommendation -->
+    <div class="recommendation">
+        <!-- H1 heading -->
+        <h1>MEGO recommendation</h1>
+    </div>
+</div>
 {% endblock %}

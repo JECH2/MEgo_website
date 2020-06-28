@@ -290,3 +290,85 @@ h1, h2, h3, h4 {
     left: 20%;
     transform: rotate(180deg);
 }
+
+/* CSS for report page */
+
+/* Report wrapper */
+.report-wrapper {
+    width: 100%;
+    height: 4000px;
+    background-color: yellow;
+}
+
+/* My Life */
+.my-life {
+    width: 98%;
+    height: 45%;
+    background-color: red;
+}
+
+.my-life > .physical-mental-social {
+    width: 96%;
+    height: 58%;
+    background-color: blue;
+    /* Display is flexbox that adds horizontally */
+    display: inline-flex;
+    /* Main axis is horizontal */
+    flex-direction: row;
+    /* Items get cluttered to one another rather than to be wrapped */
+    flex-wrap: nowrap;
+    /* Main axis alginment */
+    justify-content: space-evenly;
+    /* Sub axis alingment */
+    align-items: strech;
+}
+
+.physical-mental-social > div {
+    width: 30%;
+    background-color: orange;
+    margin: 1%;
+}
+
+.my-life > .experience-overview {
+    width: 96%;
+    height: 35%;
+    background-color: blue;
+}
+
+.cluster-description {
+    width: 96%;
+    height: 83%;
+    background-color: orange;
+    margin: 1%;
+    display: inline-flex;
+    /* Main axis is horizontal */
+    flex-direction: row;
+    /* Items get cluttered to one another rather than to be wrapped */
+    flex-wrap: nowrap;
+    /* Main axis alginment */
+    justify-content: space-evenly;
+    /* Sub axis alingment */
+    align-items: center;
+}
+
+.cluster-description > div {
+    width: 48%;
+    height: 90%;
+    background-color: purple;
+    margin-right: 1%;
+    margin-left: 1%;
+}
+
+/* Life I wish to live */
+.wish-life {
+    width: 98%;
+    height: 10%;
+    background-color: red;
+}
+
+/* MEGO recommendation */
+.recommendation {
+    width: 98%;
+    height: 45%;
+    background-color: red;
+}
