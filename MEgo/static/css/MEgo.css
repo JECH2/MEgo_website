@@ -329,6 +329,54 @@ h1, h2, h3, h4 {
     margin: 1%;
 }
 
+.mental-content {
+    width: 96%;
+    height: 90%;
+    background-color: purple;
+    margin: 1%;
+    display: inline-flex;
+    /* Main axis is horizontal */
+    flex-direction: column;
+    /* Items get cluttered to one another rather than to be wrapped */
+    flex-wrap: nowrap;
+    /* Main axis alginment */
+    justify-content: space-evenly;
+    /* Sub axis alingment */
+    align-items: center;
+}
+
+.mental-content > div {
+    width: 98%;
+    height: 30%;
+    background-color: pink;
+    margin-right: 1%;
+    margin-left: 1%;
+}
+
+.people-count-description {
+    width: 96%;
+    height: 90%;
+    background-color: purple;
+    margin: 1%;
+    display: inline-flex;
+    /* Main axis is horizontal */
+    flex-direction: column;
+    /* Items get cluttered to one another rather than to be wrapped */
+    flex-wrap: nowrap;
+    /* Main axis alginment */
+    justify-content: space-evenly;
+    /* Sub axis alingment */
+    align-items: center;
+}
+
+.people-count-description > div {
+    width: 98%;
+    height: 45%;
+    background-color: pink;
+    margin-right: 1%;
+    margin-left: 1%;
+}
+
 .my-life > .experience-overview {
     width: 96%;
     height: 35%;
