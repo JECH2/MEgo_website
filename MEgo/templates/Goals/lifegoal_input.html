@@ -1,0 +1,34 @@
+{% extends 'MEgo/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="form-group-exp">
+  <h1>Diary</h1>
+<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+<form action="" method="post">
+  {% csrf_token %}
+  {{ wizard.management_form }}
+      <p>{{ wizard.form.importance.label_tag }}</p>
+    <div class="custom-radio-form">
+        <table>
+            {% for field in wizard.form.importance %}
+            {% cycle '<tr>' '' '' %}
+            <td>
+                <input type="radio" id="{{ field.id_for_label }}"
+                       name="{{ field.data.name }}" value="{{ field.data.value }}">
+                <label for="{{ field.id_for_label }}" style="width:{{ field.data.label }}; height:{{field.data.label}}; line-height:{{field.data.label}}">{{ field.data.value }}</label>
+            </td>
+            {% cycle '' '' '</tr>' %}
+            {% endfor %}
+        </table>
+    </div>
+  </p>
+  <div class="button-center-wrapper-exp">
+  {% if wizard.steps.prev %}
+    <button class="button" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% trans "Back" %}</button>
+  {% endif %}
+    <button class="button" type="submit" value="{% trans "submit" %}">Done</button>
+  </div>
+</form>
+</div>
+{% endblock %}
