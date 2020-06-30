@@ -1,0 +1,10 @@
+{% extends 'MEgo/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="exp">
+        {% if lfv.ideal_person %}
+        <p>{{ lfv.ideal_person }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

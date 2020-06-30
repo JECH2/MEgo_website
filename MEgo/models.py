@@ -88,23 +88,27 @@ class ExpQuestions(models.Model):
     content = models.CharField(max_length=200) # content of question
     question_area = models.CharField(max_length=200) # event, thoughts, emotion
     related_tags = models.CharField(max_length=200)
+    answer_area = models.CharField(max_length=200, blank=True, null=True)
 
 # questions of life
 class LifeQuestions(models.Model):
     content = models.CharField(max_length=200) # content of question
     question_area = models.CharField(max_length=200) # one of life I wish
-    related_tags = models.CharField(max_length=200)
-    answer_area = models.CharField(max_length=200)
+    related_tags = models.CharField(max_length=200, blank=True, null=True)
+    answer_area = models.CharField(max_length=200, blank=True, null=True)
 
 # data structure for recording life I wish
 class LifeIWish(models.Model):
     input_date = models.DateTimeField(default=timezone.now)
-    life_values = models.TextField(max_length=200, blank=True, null=True)
-    priority = models.TextField(max_length=200, blank=True, null=True)
-    ideal_person = models.TextField(max_length=200, blank=True, null=True)
-    life_goals = models.TextField(max_length=200, blank=True, null=True)
-    year_of_the_goal = models.CharField(max_length=200, blank=True, null=True) # 2020 in String
-    goal_of_the_year = models.TextField(blank=True, null=True) # goals of this year
+    life_values_high = models.TextField(blank=True, null=True)
+    life_values_low = models.TextField(blank=True, null=True)
+    ideal_person = models.TextField(blank=True, null=True)
+    life_goals = models.TextField(blank=True, null=True)
+    goal_of_the_year_2020 = models.TextField(blank=True, null=True) # goals of this year
+    goal_of_the_year_2030 = models.TextField(blank=True, null=True)  # goals of this year
+    goal_of_the_year_2040 = models.TextField(blank=True, null=True) # goals of this year
+    goal_of_the_year_2050 = models.TextField(blank=True, null=True) # goals of this year
+
 
 # This function is needed for uploading user's data
 def user_path(instance, filename): #param instance is meaning for model, filename is the name of uploaded file
@@ -132,7 +136,7 @@ class Experience(models.Model):
     distance = models.FloatField(blank=True, null=True)
     # Mental Data
     event = models.TextField()
-    thoughts = models.TextField()
+    thoughts = models.TextField(null=True)
     emotion = models.TextField()
     # emotion_intensity = models.IntegerField()
     importance = models.IntegerField()

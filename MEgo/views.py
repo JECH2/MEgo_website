@@ -127,29 +127,49 @@ class NewExpbyQView(CreateView):
 # when user choose question,
 # related field with the question is automatically filled in the form
 @login_required
-def experience_new_by_question(request, pk):
+def experience_new_by_question(request, qt, pk):
     q = None
-    if pk > 0 :
-        q = get_object_or_404(ExpQuestions, pk=pk)
-    if request.method == "POST":
-        form = ExpForm(request.POST, request.FILES)
-        if form.is_valid():
-            exp = form.save(commit=False)
-            exp.author = request.user
-            parsed_emotion = exp.emotion.strip().split(',')
-            exp.emotion_color = emo_to_hex(parsed_emotion)
-            exp.save()
-            return redirect('experience_detail', pk=exp.pk)
+    if qt:
+        if pk:
+            q = get_object_or_404(LifeQuestions, pk=pk)
+            if request.method == "POST":
+                form = LifeIWishForm(request.POST, request.FILES)
+                if form.is_valid():
+                    lfv = form.save(commit=False)
+                    lfv.author = request.user
+                    lfv.save()
+                    return redirect('lfv_detail', pk=lfv.pk)
+            else:
+                # fill form based on pre-defined tags
+                form = LifeIWishForm(initial={q.question_area: q.related_tags})
     else:
-        if pk == 0:
-            form = ExpForm() #normal case
+        if pk:
+            q = get_object_or_404(ExpQuestions, pk=pk)
+        if request.method == "POST":
+            form = ExpForm(request.POST, request.FILES)
+            if form.is_valid():
+                exp = form.save(commit=False)
+                exp.author = request.user
+                parsed_emotion = exp.emotion.strip().split(',')
+                exp.emotion_color = emo_to_hex(parsed_emotion)
+                exp.save()
+                return redirect('experience_detail', pk=exp.pk)
         else:
-            # fill form based on pre-defined tags
-            form = ExpForm(initial={q.question_area: q.related_tags})
+            if pk == 0:
+                form = ExpForm() #normal case
+            else:
+                # fill form based on pre-defined tags
+                form = ExpForm(initial={q.question_area: q.related_tags})
 
     return render(request, 'MEgo/experience_edit.html', {'form': form})
 
+@login_required
+def life_value_detail(request, pk):
+    lfv = get_object_or_404(LifeIWish, pk=pk)
+    return render(request, 'MEgo/life_I_wish_detail.html', {'lfv': lfv})
+
 # for rendering page of delete a experience
+@login_required
 def experience_delete(request, pk):
     exp = get_object_or_404(Experience, pk=pk)
     exp.delete()
@@ -168,11 +188,18 @@ def analysis_report(request):
 # for rendering page of getting new question when skip button or page refresh is clicked
 @login_required
 def new_question(request):
-    random_number = randint(1, ExpQuestions.objects.count() + 1)  # 전체 question 중 하나를 랜덤으로 숫자를 고름
-    print(random_number)
-    q = get_object_or_404(ExpQuestions, pk=random_number)
-    print(q)
-    return render(request, 'MEgo/new_question.html', {'q':q})
+    question_type = randint(0, 1)  # 0 = daily 1 = life questions
+    if question_type: # 1 = life questions
+        first = LifeQuestions.objects.order_by('pk')[0].pk
+        end = first + LifeQuestions.objects.count() - 1
+        random_number = randint(first, end)  # 전체 question 중 하나를 랜덤으로 숫자를 고름
+        q = get_object_or_404(LifeQuestions, pk=random_number)
+    else:
+        first = ExpQuestions.objects.order_by('pk')[0].pk
+        end = first + ExpQuestions.objects.count() - 1
+        random_number = randint(first, end)  # 전체 question 중 하나를 랜덤으로 숫자를 고름
+        q = get_object_or_404(ExpQuestions, pk=random_number)
+    return render(request, 'MEgo/new_question.html', {'q':q, 'qt':question_type})
 
 # for rendering page of support page
 def support(request):

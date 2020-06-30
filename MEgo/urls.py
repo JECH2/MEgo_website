@@ -19,7 +19,8 @@ urlpatterns = [
     path('MEgo/report/', views.analysis_report, name='analysis_report'),
     path('MEgo/new_q/', views.new_question, name='new_question'),
     #path('MEgo/new_q/<int:pk>/', views.NewExpbyQView.as_view(), name='experience_new_by_question'),
-    path('MEgo/new_q/<int:pk>/', views.experience_new_by_question, name='experience_new_by_question'),
+    path('MEgo/new_q/<int:qt>/<int:pk>/', views.experience_new_by_question, name='experience_new_by_question'),
+    path('MEgo/lfv/<int:pk>/', views.life_value_detail, name='lfv_detail'),
     path('support/', views.support, name='support'),
     path('accounts/signup/', views.signup, name='signup'),
     path('accounts/login/', views2.LoginView.as_view(

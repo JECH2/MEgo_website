@@ -1,13 +1,10 @@
-{% extends 'MEgo/base.html' %}
+{% extends 'MEgo/new_question_base.html' %}
 {% load static %}
 
 {% block content %}
-    <div>
-        <h1>Question Page</h1>
-        <p>If you don't want to put your story on diary, just answer simple daily question!</p>
-        <a href="{% url 'new_question' %}">Skip</a>
-        <p>{{q.pk}}th question</p>
-        <p>{{q.content}}</p>
-        <a href="{% url 'experience_new_by_question' pk=q.pk %}">Answer</a>
+<a id="Next" href="{% url 'new_question' %}"><img src="{% static "Icons/_.png" %}" width="50"></a>
+    <div class="question">
+        <h1>{{q.content}}</h1>
+        <a href="{% url 'experience_new_by_question' qt=qt pk=q.pk %}">Answer</a>
     </div>
 {% endblock %}

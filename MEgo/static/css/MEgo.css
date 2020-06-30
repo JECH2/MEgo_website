@@ -66,8 +66,8 @@
 #bottom-logo {
     float: left;
     font-family: 'Catamaran', sans-serif;
-    font-weight: 400;
-    font-size: 20pt;
+    font-weight: 600;
+    font-size: 28pt;
     line-height:75px;
 }
 
@@ -87,7 +87,7 @@ a{
 /* font for titles */
 h1, h2, h3, h4 {
     font-family: 'Catamaran', sans-serif;
-    font-weight: 900;
+    font-weight: 600;
 }
 
 /* css style for overall form design in experience editing page */
@@ -282,13 +282,13 @@ h1, h2, h3, h4 {
 #Next {
      position:absolute;
      top: 38%;
-     left: 80%;
+     left: 85%;
 }
 
 #Prev {
     position:absolute;
     top: 38%;
-    left: 20%;
+    left: 12%;
     transform: rotate(180deg);
 }
 
@@ -298,20 +298,20 @@ h1, h2, h3, h4 {
 .report-wrapper {
     width: 100%;
     height: 4000px;
-    background-color: yellow;
+    background-color: none;
 }
 
 /* My Life */
 .my-life {
     width: 98%;
     height: 55%;
-    background-color: red;
+    background-color: none;
 }
 
 .my-life > .physical-mental-social {
     width: 96%;
     height: 57%;
-    background-color: blue;
+    background-color: none;
     /* Display is flexbox that adds horizontally */
     display: inline-flex;
     /* Main axis is horizontal */
@@ -326,14 +326,14 @@ h1, h2, h3, h4 {
 
 .physical-mental-social > div {
     width: 29%;
-    background-color: orange;
+    background-color: none;
     margin: 1%;
 }
 
 .physical-content {
     width: 96%;
     height: 90%;
-    background-color: purple;
+    background-color: rgba(255,255,255, 0.07);
     margin: 1%;
     display: inline-flex;
     /* Main axis is horizontal */
@@ -349,7 +349,7 @@ h1, h2, h3, h4 {
 .mental-content {
     width: 96%;
     height: 90%;
-    background-color: purple;
+    background-color: rgba(255,255,255, 0.07);
     margin: 1%;
     display: inline-flex;
     /* Main axis is horizontal */
@@ -365,7 +365,7 @@ h1, h2, h3, h4 {
 .mental-content > div {
     width: 98%;
     height: 30%;
-    background-color: palevioletred;
+    background-color: none;
     margin-right: 1%;
     margin-left: 1%;
 }
@@ -394,14 +394,14 @@ h1, h2, h3, h4 {
     width: 50px;
     height: 20px;
     padding: 5px;
-    background-color: grey;
+    background-color: rgba(255,255,255,0.1);
     text-align: center;
 }
 
 .people-count-description {
     width: 96%;
     height: 90%;
-    background-color: purple;
+    background-color: rgba(255,255,255, 0.07);
     margin: 1%;
     display: inline-flex;
     /* Main axis is horizontal */
@@ -417,7 +417,7 @@ h1, h2, h3, h4 {
 .people-count-description > div {
     width: 98%;
     height: 45%;
-    background-color: palevioletred;
+    background-color: none;
     margin-right: 1%;
     margin-left: 1%;
 }
@@ -438,7 +438,7 @@ h1, h2, h3, h4 {
     height: 20px;
     padding: 5px;
     border: 5px;
-    background-color: grey;
+    background-color: rgba(255,255,255, 0.1);
     text-align: center;
     border-radius: 100%;
 }
@@ -446,13 +446,13 @@ h1, h2, h3, h4 {
 .my-life > .experience-overview {
     width: 96%;
     height: 38%;
-    background-color: blue;
+    background-color: none;
 }
 
 .cluster-description {
     width: 91%;
     height: 90%;
-    background-color: orange;
+    background-color: rgba(255,255,255, 0.07);
     margin: 1%;
     display: inline-flex;
     /* Main axis is horizontal */
@@ -468,7 +468,7 @@ h1, h2, h3, h4 {
 .cluster-description > div {
     width: 48%;
     height: 95%;
-    background-color: purple;
+    background-color: none;
     margin-right: 1%;
     margin-left: 1%;
     text-align: left;
@@ -491,13 +491,13 @@ h1, h2, h3, h4 {
 .wish-life {
     width: 98%;
     height: 18%;
-    background-color: red;
+    background-color: none;
 }
 
 .wish-life > .life-value-goal {
     width: 96%;
     height: 50%;
-    background-color: blue;
+    background-color: none;
     margin: 1%;
     display: inline-flex;
     /* Main axis is horizontal */
@@ -513,7 +513,7 @@ h1, h2, h3, h4 {
 .life-value-goal > div {
     width: 45%;
     height: 90%;
-    background-color: orange;
+    background-color: rgba(255,255,255, 0.1);
     margin-right: 1%;
     margin-left: 1%;
 }
@@ -521,7 +521,7 @@ h1, h2, h3, h4 {
 .life-value > div {
     width: 96%;
     height: 45%;
-    background-color: purple;
+    background-color: none;
     margin: 1%;
     display: inline-flex;
     /* Main axis is horizontal */
@@ -545,7 +545,7 @@ h1, h2, h3, h4 {
     width: auto;
     height: 20px;
     padding: 5px;
-    background-color: grey;
+    background-color: rgba(255,255,255, 0.1);
     text-align: center;
 }
 
@@ -556,7 +556,7 @@ h1, h2, h3, h4 {
 .wish-life > .goals-by-years {
     width: 96%;
     height: 30%;
-    background-color: blue;
+    background-color: none;
     margin: 1%;
     display: inline-flex;
     /* Main axis is horizontal */
@@ -572,7 +572,7 @@ h1, h2, h3, h4 {
 .goals-by-years > div {
     width: 22%;
     height: 90%;
-    background-color: orange;
+    background-color: rgba(255,255,255, 0.07);
     margin: 0.6%;
 }
 
@@ -580,17 +580,35 @@ h1, h2, h3, h4 {
     text-align: left;
 }
 
+/* Questions */
+.question {
+    padding-top: 140px;
+    color: white;
+}
+.question a {
+    line-height:220px;
+    color: white;
+    padding-left:15px;
+    padding-right:15px;
+    padding-top:7px;
+    padding-bottom:7px;
+    border-radius:5%;
+    background: rgba(255,255,255, 0.1);
+}
+
+
+
 /* MEGO recommendation */
 .recommendation {
     width: 98%;
     height: 35%;
-    background-color: red;
+    background-color: none;
 }
 
 .recommendation > .overall-advice {
     width: 96%;
     height: 30%;
-    background-color: blue;
+    background-color: none;
     margin: 1%;
     display: flex;
     justify-content: center;
@@ -601,7 +619,7 @@ h1, h2, h3, h4 {
 .overall-advice > div {
     width: 92%;
     height: 95%;
-    background-color: orange;
+    background-color: rgba(255,255,255, 0.07);
     margin: 1%;
     text-align: left;
 }
@@ -609,7 +627,7 @@ h1, h2, h3, h4 {
 .recommendation > .recommended-contents-wrapper {
     width: 96%;
     height: 60%;
-    background-color: blue;
+    background-color: none;
     margin: 1%;
     display: inline-flex;
     /* Main axis is horizontal */
@@ -623,7 +641,7 @@ h1, h2, h3, h4 {
 .recommended-contents-wrapper > div {
     width: 92%;
     height: 90%;
-    background-color: orange;
+    background-color: rgba(255,255,255, 0.07);
     margin: 1%;
 }
 

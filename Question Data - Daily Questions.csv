@@ -1,19 +1,23 @@
-content,question area,related tags
-What makes you angry today?,emotion,angry
-What makes you joyful today?,emotion,joyful
-What makes you anticipated today?,emotion,anticipated
-What makes you trusted today?,emotion,trusted
-What makes you fearful today?,emotion,fearful
-What makes you surprised today?,emotion,surprised
-What makes you disgusted today?,emotion,disgusted
-What makes you laugh today?,emotion,laughing
-Who did you meet today?,event,meet
-Where did you go today?,event,visit
-What did you eat today?,event,eat
-Who made you feel angry today?,event,angry
-Who made you feel joyful today?,emotion,joyful
-Who made you feel anticipated today?,emotion,anticipated
-Who made you feel trusted today?,emotion,trusted
-Who made you feel fearful today?,emotion,fearful
-Who made you feel surprised today?,emotion,surprised
-Who made you feel disgusted today?,emotion,disgusted
+content,question area,related tags,answer area
+What made you angry today?,emotion,angry,event
+What made you happy today?,emotion,joyful,event
+What do you look forward for these days?,emotion,anticipation,event
+What is annoying these days?,emotion,trust,event
+What scared you recently?,emotion,fear,event
+What surprised you today?,emotion,surprise,event
+What disgusts you?,emotion,disgust,event
+What made you laugh today?,emotion,joyful,event
+Who did you meet today?,event,meet,associated people
+Where did you go today?,event,visit,event
+What did you eat today?,event,eat,event
+Who made you feel angry today?,emotion,angry,associated people
+Who do you want to meet these days?,emotion,anticipation,associated people
+Who is someone you can trust?,emotion,trust,associated people
+Who makes you nervous?,emotion,fear,associated people
+Who made you feel disgusted?,emotion,disgust,associated people
+What made you sad today?,emotion,sadness,event
+What is stressful these days?,emotion,fear,event
+What is your favorite song these days?,thought,song,thought
+Who is your rolemodel?,emotion,admiration,thought
+What worries you these days?,emotion,apprehension,thought
+Did anything amazing happen recently?,emotion,amazement,event

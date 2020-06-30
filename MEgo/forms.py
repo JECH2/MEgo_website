@@ -1,8 +1,7 @@
 # forms to get user's input
 
 from django import forms
-from .models import User, UserManager
-from .models import Experience, EmotionColor
+from .models import *
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from .color import emo_to_hex
 from django_select2 import forms as s2forms
@@ -75,6 +74,44 @@ class TestWidget(s2forms.ModelSelect2MultipleWidget):
     def label_from_instance(self, obj):
         return force_str(obj.emotion)
 
+class LifeIWishForm(forms.ModelForm):
+    class Meta:
+        life_values_high = models.TextField(blank=True, null=True)
+        life_values_low = models.TextField(blank=True, null=True)
+        ideal_person = models.TextField(blank=True, null=True)
+        life_goals = models.TextField(blank=True, null=True)
+        goal_of_the_year_2020 = models.TextField(blank=True, null=True)  # goals of this year
+        goal_of_the_year_2030 = models.TextField(blank=True, null=True)  # goals of this year
+        goal_of_the_year_2040 = models.TextField(blank=True, null=True)  # goals of this year
+        goal_of_the_year_2050 = models.TextField(blank=True, null=True)  # goals of this year
+        model = LifeIWish
+        fields = ['life_values_high','life_values_low', 'ideal_person', 'life_goals',
+                  'goal_of_the_year_2020', 'goal_of_the_year_2030', 'goal_of_the_year_2040', 'goal_of_the_year_2050']
+        widgets = {
+            'life_values_high': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'What are the important things for you?'}),
+            'life_values_low': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'What things are not that important for you?'}),
+            'ideal_person' : forms.TextInput(attrs={'class':'custom-form','placeholder':'what kind of person do you want to be?'}),
+            'life_goals': forms.TextInput(attrs={'class':'custom-form','placeholder':'What kind of life do you want to live?\nWhat do you want to achieve?'}),
+            'goal_of_the_year_2020' : forms.TextInput(attrs={'class':'custom-form','placeholder':'What do you want to achieve by 2020?'}),
+            'goal_of_the_year_2030' : forms.TextInput(attrs={'class':'custom-form','placeholder':'How do you imagine yourself in 2030?'}),
+            'goal_of_the_year_2040': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'How do you imagine yourself in 2040?'}),
+            'goal_of_the_year_2050': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'How do you imagine yourself in 2050?'}),
+        }
+        labels = {
+            'life_values_high':'High Priorities',
+            'life_values_low': 'Low Priorities',
+            'ideal_person': 'Your Ideal Person',
+            'life_goals':'Whole Life',
+            'goal_of_the_year_2020': 'Year 2020',
+            'goal_of_the_year_2030': 'Year 2030',
+            'goal_of_the_year_2040': 'Year 2040',
+            'goal_of_the_year_2050': 'Year 2050',
+        }
+    def __init__(self, *args, **kwargs):
+        #self.skipped_category = kwargs.pop('skipped_category', None)
+        super(LifeIWishForm, self).__init__(*args, **kwargs)
+        #self.fields[self.skipped_category].widget = forms.HiddenInput()
+        self.label_suffix = ''
 
 class ExpForm(forms.ModelForm):
     class Meta:
@@ -91,8 +128,8 @@ class ExpForm(forms.ModelForm):
                         'placeholder':'insert some medium(picture, video) as link : https://mego.pythonanywhere.com'}),
             'event' : forms.TextInput(attrs={'class':'custom-form','placeholder':'what happened to you'}),
             'thoughts' : forms.TextInput(attrs={'class':'custom-form','placeholder':'what did you think'}),
-            'emotion' : TestWidget,
-            #'emotion' : forms.TextInput(attrs={'class':'custom-form','placeholder':'how did you feel'}),
+            #'emotion' : TestWidget,
+            'emotion' : forms.TextInput(attrs={'class':'custom-form','placeholder':'how did you feel'}),
             'importance' : forms.RadioSelect(attrs={'class':'custom-radio-form-default'}, choices=IMPORTANCE_CHOICES),
         }
         labels = {

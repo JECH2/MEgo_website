@@ -1,0 +1,39 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<html>
+    <head>
+        <title>MEGO</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/MEgo.css' %}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;900&display=swap">
+    <style>
+        body {
+            background: radial-gradient( at 0% 0%, rgba(143,52,101,0.6) 0%, rgba(108,28,71,0.6) 50%, rgba(62,38,81,0.6) 100%);
+            font-family: 'Catamaran', sans-serif;
+            font-weight: 400;
+            color: white;
+            padding-top : 160px;
+        }
+    </style>
+    </head>
+    <body>
+        <header class="page-header">
+            <h1 id="logo"><a href="{% url 'experience_circle' %}"><img src="{% static "Icons/Mego_white.png" %}" height="50"></a></h1>
+            <nav>
+                <ul class="top-menu">
+                    {% if user.is_authenticated %}
+                    <li><a>{{ user.nickname }}'s MEGO</a></li>
+                    <li><a href="{% url 'logout' %}">LOGOUT</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'experience_circle' %}"><img src="{% static "Icons/megosymbol_white.png" %}" width="50" height="50"></a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="content container">
+            <center>
+            {% block content %}
+            {% endblock %}
+            </center>
+        </div>
+    </body>
+</html>
