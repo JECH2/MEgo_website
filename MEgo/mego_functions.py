@@ -121,11 +121,11 @@ def preprocess_all(data):
     return event_whole, thought_whole, people_whole, experience_tokenized, people_tokenized_spacing
 
 # Wordcloud_all
-def wordcloud_all(event_whole, thought_whole, wd):
+def wordcloud_all(event_whole, thought_whole, wd, username):
     import os
     
-    event_wordcloud = wordcloud(event_whole, "event", wd)
-    thought_wordcloud = wordcloud(thought_whole, "thought", wd)
+    event_wordcloud = wordcloud(event_whole, "event", wd, username)
+    thought_wordcloud = wordcloud(thought_whole, "thought", wd, username)
 
 # Ngram tokenization
 def ngram_tokenize(list_of_tokens, n):
@@ -137,7 +137,7 @@ def ngram_tokenize(list_of_tokens, n):
     return list_of_tokens
 
 # Plot wordcloud
-def wordcloud(tokens_whole, name, wd):
+def wordcloud(tokens_whole, name, wd, username):
     from wordcloud import WordCloud
     import os
     
@@ -147,13 +147,13 @@ def wordcloud(tokens_whole, name, wd):
     array_wordcloud = wordcloud.generate_from_text(" ".join(tokens_whole)).to_array()
     
     import matplotlib.pyplot as plt
-    fig = plt.figure(figsize=(10, 10))
+    plt.figure(figsize=(10, 10))
     #plt.imshow(array_wordcloud, interpolation="bilinear")
     plt.axis('off')
     #plt.show()
     
     os.chdir(wd)
-    plt.savefig("wordcloud_{}.png".format(name), transparent=True)
+    plt.savefig("{}_wordcloud_{}.png".format(name, username), transparent=True)
 
 # Get similar words by emotions
 def get_similar_words(experience_tokenized, size, window, min_count, workers, sg):
@@ -172,7 +172,7 @@ def get_similar_words(experience_tokenized, size, window, min_count, workers, sg
     return " ".join([joy[:5][i][0] for i in range(5)]), " ".join([sadness[:5][i][0] for i in range(5)]), " ".join([fear[:5][i][0] for i in range(5)])
 
 # Get people count
-def get_people_count(people_whole):
+def get_people_count(people_whole, username):
     import nltk
     import seaborn as sns
     from matplotlib import pyplot as plt
@@ -193,8 +193,7 @@ def get_people_count(people_whole):
     
     # Plot
     with sns.axes_style({"font.family": ["Arial"]}):
-        g = sns.catplot(y="terms", x="counts", kind="bar", palette="BuPu_d", edgecolor=".6", data=fd_df_uni)
-        g.savefig("people_count.png", transparent=True)
+        sns.catplot(y="terms", x="counts", kind="bar", palette="BuPu_d", edgecolor=".6", data=fd_df_uni).savefig("{}_people_count.png".format(username), transparent=True)
         # g.fig.suptitle("Your Experience Keywords")
 
 # Get DTM
@@ -335,7 +334,7 @@ def _position_nodes(g, partition, **kwargs):
     return pos
 
 # Plot the network
-def word_cluster_plot(co_matrix, feature_names, term_frequency, k):
+def word_cluster_plot(co_matrix, feature_names, term_frequency, k, username):
     # to install networkx 2.0 compatible version of python-louvain use:
     # pip install -U git+https://github.com/taynaud/python-louvain.git@networkx2
     import community
@@ -356,7 +355,7 @@ def word_cluster_plot(co_matrix, feature_names, term_frequency, k):
     nx.draw_networkx(G, pos=pos_terms, font_size=14, font_family = "fantasy", font_weight="bold",
                      font_color="#FFFFFF", node_size=np.multiply(list(term_frequency.values()),k), 
                      node_color=list(partition.values()), cmap=plt.cm.Set1,
-                     edge_color="#FFFFFF"); plt.savefig("word clustering.png", transparent=True, dpi=600)
+                     edge_color="#FFFFFF"); plt.savefig("{}_word clustering.png".format(username), transparent=True, dpi=600)
     return
 
 # Convert
@@ -779,7 +778,7 @@ def plot_ego_network(ego_matrix_final, list_of_people_abb, marker_size):
     # plt.show()
     plt.savefig("ego_network.png", transparent=True)
 
-def plot_ego_network_exp(ego_matrix_exp, list_of_people, marker_size):
+def plot_ego_network_exp(ego_matrix_exp, list_of_people, marker_size, username):
     import matplotlib as mpl
     import matplotlib.pylab as plt
     from numpy.random import default_rng
@@ -862,7 +861,7 @@ def plot_ego_network_exp(ego_matrix_exp, list_of_people, marker_size):
     for i, x, y in zip(range(len(coord_x)), coord_x, coord_y):
         plt.text(x, y, (list(pos_people.index) + list(neg_people.index))[i], fontsize=15, horizontalalignment="center", verticalalignment="center")
     # plt.show()
-    plt.savefig("ego_network.png", transparent=True)
+    plt.savefig("{}_ego_network.png".format(username), transparent=True)
     
     pos_people_close = pos_people.index[pos_people.distance_experience <= 30]
     pos_poeple_far = pos_people.index[pos_people.distance_experience > 30]
