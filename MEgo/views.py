@@ -17,6 +17,7 @@ from random import randint
 from .color import emo_to_hex
 from .manipulate_csv_data import export_exp_data
 from .mego_all_in_one import get_report
+from django.core.files import File
 
 # for rendering page of experience circle
 @login_required
@@ -281,6 +282,7 @@ def create_report(request):
                     things_sadness=report_data['things_sadness'],
                     things_fear=report_data['things_fear'],
                     )
+    report.save()
     if report_data['pos_people_close'] is not None:
         setattr(report, 'pos_people_close', report_data['pos_people_close'])
     if report_data['pos_people_far'] is not None:
@@ -294,7 +296,7 @@ def create_report(request):
     report.wordcloud_event.save('e_w.png',File(open('MEgo/report/'+username+'_wordcloud_event.png', 'rb')))
     report.wordcloud_thought.save('t_w.jpg',File(open('MEgo/report/'+username+'_wordcloud_thought.png', 'rb')))
     report.word_clustering.save('w_c.png',File(open('MEgo/report/'+username+'_word_clustering.png', 'rb')))
-    report.social_map.save('s_m.png',File(open('MEgo/report/'+username+'_social_map.png', 'rb')))
+    report.social_map.save('s_m.png',File(open('MEgo/report/'+username+'_ego_network.png', 'rb')))
     report.people_count.save('s_m.png', File(open('MEgo/report/'+username+'_people_count.png', 'rb')))
 
     return render(request, 'MEgo/analysis_report.html', {'report':report})
