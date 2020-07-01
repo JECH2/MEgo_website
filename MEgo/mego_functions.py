@@ -353,7 +353,7 @@ def word_cluster_plot(co_matrix, feature_names, term_frequency, k):
     nx.draw_networkx(G, pos=pos_terms, font_size=14, font_family = "fantasy", font_weight="bold",
                      font_color="#FFFFFF", node_size=np.multiply(list(term_frequency.values()),k), 
                      node_color=list(partition.values()), cmap=plt.cm.Set1,
-                     edge_color="#FFFFFF"); plt.show(); plt.savefig("word clustering.png", transparent=True, dpi=600)
+                     edge_color="#FFFFFF"); plt.savefig("word clustering.png", transparent=True, dpi=600)
     return
 
 # Convert
@@ -773,7 +773,7 @@ def plot_ego_network(ego_matrix_final, list_of_people_abb, marker_size):
     plt.axhline(0, ls="dashed", zorder=1, color="#A67D97")
     for i, x, y in zip(range(len(coord_x)), coord_x, coord_y):
         plt.text(x, y, list_of_people_abb[i], fontsize=15, horizontalalignment="center", verticalalignment="center")
-    plt.show()
+    # plt.show()
     plt.savefig("ego_network.png", transparent=True)
 
 def plot_ego_network_exp(ego_matrix_exp, list_of_people, marker_size):
@@ -858,7 +858,7 @@ def plot_ego_network_exp(ego_matrix_exp, list_of_people, marker_size):
     plt.axhline(0, ls="dashed", zorder=1, color="#A67D97")
     for i, x, y in zip(range(len(coord_x)), coord_x, coord_y):
         plt.text(x, y, (list(pos_people.index) + list(neg_people.index))[i], fontsize=15, horizontalalignment="center", verticalalignment="center")
-    plt.show()
+    # plt.show()
     plt.savefig("ego_network.png", transparent=True)
     
     pos_people_close = pos_people.index[pos_people.distance_experience <= 30]
