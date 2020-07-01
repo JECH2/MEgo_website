@@ -32,9 +32,9 @@ def get_report(data, username, wd):
 
     event_whole, thought_whole, people_whole, experience_tokenized, people_tokenized_spacing = f.preprocess_all(data)
 
-    f.wordcloud_all(event_whole, thought_whole, wd)
+    f.wordcloud_all(event_whole, thought_whole, wd, username)
 
-    f.get_people_count(people_whole)
+    f.get_people_count(people_whole, username)
 
     things_joy, things_sadness, things_fear = f.get_similar_words(experience_tokenized, 25, 5, 2, 4, 0)
 
@@ -42,12 +42,12 @@ def get_report(data, username, wd):
 
     co_matrix, term_id = f.create_co_occurences_matrix(feature_names, experience_tokenized)
 
-    f.word_cluster_plot(co_matrix, feature_names, term_frequency, 13)
+    f.word_cluster_plot(co_matrix, feature_names, term_frequency, 13, username)
 
     list_of_people = np.unique(people_tokenized_spacing)
     ego_matrix_exp = f.get_ego_matrix_exp(data, list_of_people)
 
-    pos_people_close, pos_people_far, neg_people_close, neg_people_far = f.plot_ego_network_exp(ego_matrix_exp, list_of_people, 30)
+    pos_people_close, pos_people_far, neg_people_close, neg_people_far = f.plot_ego_network_exp(ego_matrix_exp, list_of_people, 30, username)
 
     report_data = {
         "things_joy": things_joy,
