@@ -144,6 +144,10 @@ class NewLfvQView(CreateView):
     template_name = 'MEgo/question_answer.html'
     form_class = DynamicLifeIWishForm
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse('experience_circle')
 
@@ -256,9 +260,10 @@ def social_map(request):
 @login_required
 def analysis_report(request):
     report = Report.objects.filter(author__exact=request.user.id).reverse()
+    lfv = LifeIWish.objects.filter(author__exact=request.user.id)
     # if no-report
     if report.count() > 0:
-        return render(request, 'MEgo/analysis_report.html',{'report':report[0]})
+        return render(request, 'MEgo/analysis_report.html',{'report':report[0], 'lfv':lfv})
 
     return redirect('create_report')
 
@@ -275,7 +280,7 @@ def create_report(request):
     # export data as csv
     export_exp_data(csv_path1)
     report_data = get_report(username)
-
+    lfv = LifeIWish.objects.filter(author__exact=request.user.id)
     # make a report instance
     report = Report(author=request.user,
                     things_joy=report_data['things_joy'],
@@ -299,7 +304,7 @@ def create_report(request):
     report.social_map.save('s_m.png',File(open('MEgo/report/'+username+'_ego_network.png', 'rb')))
     report.people_count.save('s_m.png', File(open('MEgo/report/'+username+'_people_count.png', 'rb')))
 
-    return render(request, 'MEgo/analysis_report.html', {'report':report})
+    return render(request, 'MEgo/analysis_report.html', {'report':report, 'lfv':lfv})
 
 # for rendering page of getting new question when skip button or page refresh is clicked
 @login_required

@@ -29,12 +29,12 @@
                     <div class='event-wordcloud'>
                         <!-- H3 heading -->
                         <h3>Event Wordcloud</h3>
-                        <img src="{% static 'example_data_visualization/wordcloud_event.png' %}" alt="Event Wordcloud">
+                        <img src="{{ report.wordcloud_event.url }}" alt="Event Wordcloud">
                     </div>
                     <div class='thought-wordcloud'>
                         <!-- H3 heading -->
                         <h3>Thought Wordcloud</h3>
-                        <img src="{% static 'example_data_visualization/wordcloud_thought.png' %}" alt="Thought Wordcloud">
+                        <img src="{{ report.wordcloud_thought.url }}" alt="Thought Wordcloud">
                     </div>
                     <div class='emotion-factor'>
                         <!-- H3 heading -->
@@ -70,7 +70,7 @@
                     <!-- People count -->
                     <div class="people-count">
                         <h3>Frequently Mentioned People</h3>
-                        <img src="{% static 'example_data_visualization/people_count.png' %}" alt="People Count">
+                        <img src="{{ report.people_count.url }}" alt="People Count">
                     </div>
 
                     <!-- People count description -->
@@ -107,7 +107,7 @@
                 <!-- Word clustering -->
                 <div class="word-clustering">
                     <h3>Words Map</h3>
-                    <img src="{% static 'example_data_visualization/word clustering.png' %}" alt="Word Clustering">
+                    <img src="{{ report.word_clustering.url }}" alt="Word Clustering">
                 </div>
 
                 <!-- Word clustering description -->
@@ -133,8 +133,7 @@
     <!-- Life I wish to live -->
     <div class="wish-life">
         <!-- H1 heading -->
-        <h1>Life I Wish to Live</h1>
-
+        <h1>Life I Wish to Live<a href="{% url 'analysis_report' %}"><img src="{% static "Icons/+_white.png" %}" width="50" height="50" style="float:right; margin-right:90px;"></a></h1>
         <!-- Life values and Life goals -->
         <div class="life-value-goal">
             <!-- Life values -->
@@ -143,16 +142,29 @@
                     <!-- H2 heading -->
                     <h2>Life Priorities</h2>
                     <div>
-                        <p>Maturity</p>
-                        <p>Friends</p>
-                        <p>Entertainment</p>
+                        <h3>High Priorities</h3>
+                        {% for post in lfv %}
+                        {% if post.life_values_high %}
+                        <p>{{ post.life_values_high }}</p>
+                        {% endif %}
+                        {% endfor %}
+                        <h3>Low Priorities</h3>
+                        {% for post in lfv %}
+                        {% if post.life_values_low %}
+                        <p>{{ post.life_values_low }}</p>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 <div>
                     <!-- H2 heading -->
                     <h2>A Person You Want to Be</h2>
                     <div>
-                        <p>Be a smart, good, and strong man</p>
+                        {% for post in lfv %}
+                        {% if post.ideal_person %}
+                        <p>{{ post.ideal_person }}</p>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -163,11 +175,11 @@
                 <h2>Life Goals</h2>
                 <div>
                     <ol>
-                        <li>Contribute to my country through my research</li>
-                        <li>Be a good husband</li>
-                        <li>Have a happy life</li>
-                        <li>Help other people</li>
-                        <li>Be a father who is always there for my childrend</li>
+                        {% for post in lfv %}
+                        {% if post.life_goals %}
+                        <li>{{ post.life_goals }}</li>
+                        {% endif %}
+                        {% endfor %}
                     </ol>
                 </div>
             </div>
@@ -179,31 +191,44 @@
                 <!-- H2 headings -->
                 <h2>Your 2020 Goals</h2>
                 <ol>
-                    <li>Publish my first paper</li>
-                    <li>Join the 500kg Club</li>
-                    <li>Master NLP</li>
+                    {% for post in lfv %}
+                    {% if post.goal_of_the_year_2020 %}
+                    <li>{{ post.goal_of_the_year_2020 }}</li>
+                    {% endif %}
+                    {% endfor %}
                 </ol>
             </div>
             <div>
                 <!-- H2 headings -->
                 <h2>Your 2030 Goals</h2>
                 <ol>
-                    <li>Become a Ph.D</li>
-                    <li>Make a family</li>
+                    {% for post in lfv %}
+                    {% if post.goal_of_the_year_2030 %}
+                    <li>{{ post.goal_of_the_year_2030 }}</li>
+                    {% endif %}
+                    {% endfor %}
                 </ol>
             </div>
             <div>
                 <!-- H2 headings -->
                 <h2>Your 2040 Goals</h2>
                 <ol>
-                    <li>Become a professor</li>
+                    {% for post in lfv %}
+                    {% if post.goal_of_the_year_2040 %}
+                    <li>{{ post.goal_of_the_year_2040 }}</li>
+                    {% endif %}
+                    {% endfor %}
                 </ol>
             </div>
             <div>
                 <!-- H2 headings -->
                 <h2>Your 2050 Goals</h2>
                 <ol>
-                    <li>Win the Nobel Prize</li>
+                    {% for post in lfv %}
+                    {% if post.goal_of_the_year_2050 %}
+                    <li>{{ post.goal_of_the_year_2050 }}</li>
+                    {% endif %}
+                    {% endfor %}
                 </ol>
             </div>
         </div>
@@ -215,13 +240,13 @@
         <!-- H1 heading -->
         <h1>MEGO recommendation</h1>
         <!-- Overall advice -->
-        <div class="overall-advice">
-            <div>
-                <p>{{ user.nickname }}, you want to publish your first paper this year <br>
-                Even though it is stressful at the lab studying and researching, healthy body is important for you.
-                </p>
-            </div>
-        </div>
+<!--        <div class="overall-advice">-->
+<!--            <div>-->
+<!--                <p>{{ user.nickname }}, you want to publish your first paper this year <br>-->
+<!--                Even though it is stressful at the lab studying and researching, healthy body is important for you.-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <!-- Recommended contents -->
         <div class="recommended-contents-wrapper">
