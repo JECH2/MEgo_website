@@ -149,7 +149,7 @@ def wordcloud(tokens_whole, name):
     plt.imshow(array_wordcloud, interpolation="bilinear")
     plt.axis('off')
     #plt.show()
- 
+
     plt.savefig("wordcloud_{}.png".format(name), transparent=True)
 
 # Get similar words by emotions
@@ -867,3 +867,17 @@ def plot_ego_network_exp(ego_matrix_exp, list_of_people, marker_size):
     neg_people_far = neg_people.index[neg_people.distance_experience > 30]
     
     return pos_people_close, pos_poeple_far, neg_people_close, neg_people_far
+
+
+def get_url_list(report_data):
+    import numpy as np
+
+    queries = [list(report_data.values())[i].split(" ") for i in range(len(report_data.keys()))]
+    urls = np.empty(shape=(3, 5), dtype="object")
+    for i in range(len(queries)):
+        for j in range(len(queries[i])):
+            youtube_url = "https://www.youtube.com/results?search_query={}".format(str(queries[i][j]))
+            urls[i][j] = youtube_url
+            print(youtube_url)
+
+    return urls
