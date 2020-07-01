@@ -153,7 +153,7 @@ def wordcloud(tokens_whole, name, wd, username):
     #plt.show()
     
     os.chdir(wd)
-    plt.savefig("{}_wordcloud_{}.png".format(name, username), transparent=True)
+    plt.savefig("{}_wordcloud_{}.png".format(username, name), transparent=True)
 
 # Get similar words by emotions
 def get_similar_words(experience_tokenized, size, window, min_count, workers, sg):
