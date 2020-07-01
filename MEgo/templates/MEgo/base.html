@@ -35,6 +35,7 @@
                 <ul class="top-menu">
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}" style="font-size:10px;">LOGOUT</a></li>
+                    <li><a href="{% url 'analysis_report_example' %}" style="font-size:10px;">Example Report</a></li>
                     <li><a>{{ user.nickname }}'s MEGO</a></li>
                     {% endif %}
                     <li><a href="{% url 'analysis_report' %}"><img src="{% static "Icons/megosymbol.png" %}" width="50" height="50"></a></li>

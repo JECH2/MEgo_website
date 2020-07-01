@@ -121,9 +121,11 @@ def preprocess_all(data):
     return event_whole, thought_whole, people_whole, experience_tokenized, people_tokenized_spacing
 
 # Wordcloud_all
-def wordcloud_all(event_whole, thought_whole):
-    event_wordcloud = wordcloud(event_whole, "event")
-    thought_wordcloud = wordcloud(thought_whole, "thought")
+def wordcloud_all(event_whole, thought_whole, wd):
+    import os
+    
+    event_wordcloud = wordcloud(event_whole, "event", wd)
+    thought_wordcloud = wordcloud(thought_whole, "thought", wd)
 
 # Ngram tokenization
 def ngram_tokenize(list_of_tokens, n):
@@ -135,7 +137,7 @@ def ngram_tokenize(list_of_tokens, n):
     return list_of_tokens
 
 # Plot wordcloud
-def wordcloud(tokens_whole, name):
+def wordcloud(tokens_whole, name, wd):
     from wordcloud import WordCloud
     import os
     
@@ -146,10 +148,11 @@ def wordcloud(tokens_whole, name):
     
     import matplotlib.pyplot as plt
     fig = plt.figure(figsize=(10, 10))
-    plt.imshow(array_wordcloud, interpolation="bilinear")
+    #plt.imshow(array_wordcloud, interpolation="bilinear")
     plt.axis('off')
     #plt.show()
-
+    
+    os.chdir(wd)
     plt.savefig("wordcloud_{}.png".format(name), transparent=True)
 
 # Get similar words by emotions
@@ -218,8 +221,8 @@ def create_co_occurences_matrix(allowed_words, documents):
     from scipy.sparse import csr_matrix
 
 
-    print(f"allowed_words:\n{allowed_words}")
-    print(f"documents:\n{documents}")
+    #print(f"allowed_words:\n{allowed_words}")
+    #print(f"documents:\n{documents}")
     word_to_id = dict(zip(allowed_words, range(len(allowed_words))))
     documents_as_ids = [np.sort([word_to_id[w] for w in doc if w in word_to_id]).astype('uint32') for doc in documents]
     row_ind, col_ind = zip(*itertools.chain(*[[(i, w) for w in doc] for i, doc in enumerate(documents_as_ids)]))
@@ -229,7 +232,7 @@ def create_co_occurences_matrix(allowed_words, documents):
     words_cooc_matrix = docs_words_matrix.T * docs_words_matrix  # multiplying docs_words_matrix with its transpose matrix would generate the co-occurences matrix
     words_cooc_matrix.setdiag(0)
     
-    print(f"words_cooc_matrix:\n{words_cooc_matrix.todense()}")
+    #print(f"words_cooc_matrix:\n{words_cooc_matrix.todense()}")
     return words_cooc_matrix, word_to_id
 
 ## Community plotting
@@ -353,7 +356,7 @@ def word_cluster_plot(co_matrix, feature_names, term_frequency, k):
     nx.draw_networkx(G, pos=pos_terms, font_size=14, font_family = "fantasy", font_weight="bold",
                      font_color="#FFFFFF", node_size=np.multiply(list(term_frequency.values()),k), 
                      node_color=list(partition.values()), cmap=plt.cm.Set1,
-                     edge_color="#FFFFFF"); plt.show(); plt.savefig("word clustering.png", transparent=True, dpi=600)
+                     edge_color="#FFFFFF"); plt.savefig("word clustering.png", transparent=True, dpi=600)
     return
 
 # Convert
@@ -718,8 +721,8 @@ def plot_ego_network(ego_matrix_final, list_of_people_abb, marker_size):
         while round(distance.euclidean((0,0), (x, y)), 0) != round(float(pos_people.distance_relationship[i]), 0):
             x = uniform(-50, 55)
             y = uniform(10, 55)
-            print("Current distance: ", round(distance.euclidean((0,0), (x, y)), 0))
-            print("Target distance: ", round(float(pos_people.distance_relationship[i]), 0))
+            #print("Current distance: ", round(distance.euclidean((0,0), (x, y)), 0))
+            #print("Target distance: ", round(float(pos_people.distance_relationship[i]), 0))
         print("\nPoint {} found".format(i+1))
         
         if (round(x, 2) not in pos_people_coord_x) and (round(y, 2) not in pos_people_coord_y):
@@ -749,8 +752,8 @@ def plot_ego_network(ego_matrix_final, list_of_people_abb, marker_size):
         while round(distance.euclidean((0,0), (x, y)), 0) != round(float(neg_people.distance_relationship[i]), 0):
             x = uniform(-50, 55)
             y = uniform(-10, -55)
-            print("Current distance: ", round(distance.euclidean((0,0), (x, y)), 0))
-            print("Target distance: ", round(float(neg_people.distance_relationship[i]), 0))
+            #print("Current distance: ", round(distance.euclidean((0,0), (x, y)), 0))
+            #print("Target distance: ", round(float(neg_people.distance_relationship[i]), 0))
         print("\nPoint {} found".format(i+1))
         
         if (round(x, 2) not in neg_people_coord_x) and (round(y, 2) not in neg_people_coord_y):
@@ -773,7 +776,7 @@ def plot_ego_network(ego_matrix_final, list_of_people_abb, marker_size):
     plt.axhline(0, ls="dashed", zorder=1, color="#A67D97")
     for i, x, y in zip(range(len(coord_x)), coord_x, coord_y):
         plt.text(x, y, list_of_people_abb[i], fontsize=15, horizontalalignment="center", verticalalignment="center")
-    plt.show()
+    # plt.show()
     plt.savefig("ego_network.png", transparent=True)
 
 def plot_ego_network_exp(ego_matrix_exp, list_of_people, marker_size):
@@ -803,8 +806,8 @@ def plot_ego_network_exp(ego_matrix_exp, list_of_people, marker_size):
         while round(distance.euclidean((0,0), (x, y)), 0) != round(float(pos_people.distance_experience[i]), 0):
             x = uniform(-50, 55)
             y = uniform(10, 55)
-            print("Current distance: ", round(distance.euclidean((0,0), (x, y)), 0))
-            print("Target distance: ", round(float(pos_people.distance_experience[i]), 0))
+            #print("Current distance: ", round(distance.euclidean((0,0), (x, y)), 0))
+            #print("Target distance: ", round(float(pos_people.distance_experience[i]), 0))
         print("\nPoint {} found".format(i+1))
         
         if (round(x, 2) not in pos_people_coord_x) and (round(y, 2) not in pos_people_coord_y):
@@ -834,8 +837,8 @@ def plot_ego_network_exp(ego_matrix_exp, list_of_people, marker_size):
         while round(distance.euclidean((0,0), (x, y)), 0) != round(float(neg_people.distance_experience[i]), 0):
             x = uniform(-50, 55)
             y = uniform(-10, -55)
-            print("Current distance: ", round(distance.euclidean((0,0), (x, y)), 0))
-            print("Target distance: ", round(float(neg_people.distance_experience[i]), 0))
+            #print("Current distance: ", round(distance.euclidean((0,0), (x, y)), 0))
+            #print("Target distance: ", round(float(neg_people.distance_experience[i]), 0))
         print("\nPoint {} found".format(i+1))
         
         if (round(x, 2) not in neg_people_coord_x) and (round(y, 2) not in neg_people_coord_y):
@@ -858,7 +861,7 @@ def plot_ego_network_exp(ego_matrix_exp, list_of_people, marker_size):
     plt.axhline(0, ls="dashed", zorder=1, color="#A67D97")
     for i, x, y in zip(range(len(coord_x)), coord_x, coord_y):
         plt.text(x, y, (list(pos_people.index) + list(neg_people.index))[i], fontsize=15, horizontalalignment="center", verticalalignment="center")
-    plt.show()
+    # plt.show()
     plt.savefig("ego_network.png", transparent=True)
     
     pos_people_close = pos_people.index[pos_people.distance_experience <= 30]

@@ -12,6 +12,7 @@ import sys
 import pandas as pd
 import numpy as np
 from .mego_functions import *
+from pathlib import Path
 
 #%% Read in data\
 #data = pd.read_excel("data.xlsx", sheet_name="JS")
@@ -19,12 +20,17 @@ from .mego_functions import *
 #data = pd.read_csv(CSV_PATH,encoding='latin-1')
 #username = os.path.basename(CSV_PATH)[:-4]
 
-def get_report(csv_path, username):
-    data = pd.read_csv(csv_path, encoding='latin-1')
+def get_report(username):
+
+    dirname = os.path.realpath(__file__)
+    wd = dirname[:-len("mego_all_in_one.py")] + "report"
+
+    os.chdir(wd)
+    data = pd.read_csv(wd+'/'+username+'.csv', encoding='latin-1')
 
     event_whole, thought_whole, people_whole, experience_tokenized, people_tokenized_spacing = preprocess_all(data)
 
-    wordcloud_all(event_whole, thought_whole)
+    wordcloud_all(event_whole, thought_whole, wd)
 
     get_people_count(people_whole)
 
@@ -43,7 +49,7 @@ def get_report(csv_path, username):
 
     report_data = {
         "things_joy": things_joy,
-        "thing_sadness": things_sadness, 
+        "things_sadness": things_sadness,
         "things_fear": things_fear,
         "pos_people_close":pos_people_close,
         "pos_people_far":pos_people_far,
@@ -53,6 +59,5 @@ def get_report(csv_path, username):
     
     return report_data
 
-#report_data = get_report(CSV_PATH,username)
-
 #print(report_data)
+#report_data = get_report(data, username, wd)

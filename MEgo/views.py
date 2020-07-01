@@ -261,26 +261,34 @@ def analysis_report(request):
 
     return redirect('create_report')
 
+# for rendering page of analysis report page
+@login_required
+def analysis_report_example(request):
+    return render(request, 'MEgo/analysis_report_example.html')
+
 # for rendering page of making report
 @login_required
 def create_report(request):
     username = request.user.user_id
-    csv_path = 'MEgo/report/' + username + '.csv'
-
+    csv_path1 = 'MEgo/report/' + username + '.csv'
     # export data as csv
-    export_exp_data(csv_path)
-    report_data = get_report(csv_path, username)
+    export_exp_data(csv_path1)
+    report_data = get_report(username)
 
     # make a report instance
-    report = Report(author=request.user.id,
+    report = Report(author=request.user,
                     things_joy=report_data['things_joy'],
                     thing_sadness=report_data['things_sadness'],
                     things_fear=report_data['things_fear'],
-                    pos_people_close=report_data['pos_people_close'],
-                    pos_people_far=report_data['pos_people_far'],
-                    neg_people_close=report_data['neg_people_close'],
-                    neg_people_far=report_data['neg_people_far'],
                     )
+    if report_data['pos_people_close']:
+        setattr(report, 'pos_people_close', report_data['pos_people_close'])
+    if report_data['pos_people_far']:
+        setattr(report, 'pos_people_far', report_data['pos_people_far'])
+    if report_data['neg_people_close']:
+        setattr(report, 'neg_people_close', report_data['neg_people_close'])
+    if report_data['neg_people_far']:
+        setattr(report, 'neg_people_far', report_data['neg_people_far'])
 
     # upload png files
     report.wordcloud_event.save('e_w.png',File(open('MEgo/report/'+username+'_wordcloud_event.png', 'rb')))

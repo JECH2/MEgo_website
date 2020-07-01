@@ -1,0 +1,247 @@
+{% extends 'MEgo/analysis_report_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="report-wrapper">
+    <!-- Current life -->
+    <div class="my-life">
+        <!-- H1 heading -->
+        <h1>My Life</h1>
+
+        <!-- Physical-Mental-Social report -->
+        <div class="physical-mental-social">
+            <!-- Physical report -->
+            <div class="physical">
+                <!-- H2 headings -->
+                <h2>Physical</h2>
+
+                <!-- Physical report contents -->
+                <div class="physical-content"></div>
+            </div>
+
+            <!-- Mental report -->
+            <div class="mental">
+                <!-- H2 headings -->
+                <h2>Mental</h2>
+
+                <!-- Mental report contents -->
+                <div class="mental-content">
+                    <div class='event-wordcloud'>
+                        <!-- H3 heading -->
+                        <h3>Event Wordcloud</h3>
+                        <img src="{% static 'example_data_visualization/wordcloud_event.png' %}" alt="Event Wordcloud">
+                    </div>
+                    <div class='thought-wordcloud'>
+                        <!-- H3 heading -->
+                        <h3>Thought Wordcloud</h3>
+                        <img src="{% static 'example_data_visualization/wordcloud_thought.png' %}" alt="Thought Wordcloud">
+                    </div>
+                    <div class='emotion-factor'>
+                        <!-- H3 heading -->
+                        <h3>Things That Make You Happy</h3>
+                        <div>
+                            <p>Lab</p>
+                            <p>Class</p>
+                            <p>Work</p>
+                        </div>
+                        <h3>Things That Make You Worry</h3>
+                        <div>
+                            <p>Lab</p>
+                            <p>Class</p>
+                            <p>Work</p>
+                        </div>
+                        <h3>Things That Make You Sad</h3>
+                        <div>
+                            <p>Lab</p>
+                            <p>Class</p>
+                            <p>Work</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social report -->
+            <div class="social">
+                <!-- H2 heading -->
+                <h2>Social</h2>
+
+                <!-- People count and description -->
+                <div class="people-count-description">
+                    <!-- People count -->
+                    <div class="people-count">
+                        <h3>Frequently Mentioned People</h3>
+                        <img src="{% static 'example_data_visualization/people_count.png' %}" alt="People Count">
+                    </div>
+
+                    <!-- People count description -->
+                    <div class="people-closeness">
+                        <h3>Closeness among People</h3>
+                        <h4>People You are Positively Close to</h4>
+                        <div>
+                            <span>JWY</span>
+                        </div>
+                        <h4>People You are Positively Far from</h4>
+                        <div>
+                            <span>DYI</span>
+                        </div>
+                        <h4>People You are Negatively Close to</h4>
+                        <div>
+                            <span>JDY</span>
+                        </div>
+                        <h4>People You are Negatively Far from</h4>
+                        <div>
+                            <span>SYP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Word cluster overview -->
+        <div class="experience-overview">
+            <!-- H2 heading -->
+            <h2>Experience Overview</h2>
+
+            <!-- Word clutering and description -->
+            <div class="cluster-description">
+                <!-- Word clustering -->
+                <div class="word-clustering">
+                    <h3>Words Map</h3>
+                    <img src="{% static 'example_data_visualization/word clustering.png' %}" alt="Word Clustering">
+                </div>
+
+                <!-- Word clustering description -->
+                <div class="description">
+                    <h3>Insights</h3>
+                    <p>When you are with <br>
+                    You feel: <br>
+                    Others:
+                    </p>
+                    <p>When you are with <br>
+                        You feel: <br>
+                        Others:
+                    </p>
+                    <p>When you are with <br>
+                        You feel: <br>
+                        Others:
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Life I wish to live -->
+    <div class="wish-life">
+        <!-- H1 heading -->
+        <h1>Life I Wish to Live</h1>
+
+        <!-- Life values and Life goals -->
+        <div class="life-value-goal">
+            <!-- Life values -->
+            <div class="life-value">
+                <div>
+                    <!-- H2 heading -->
+                    <h2>Life Priorities</h2>
+                    <div>
+                        <p>Maturity</p>
+                        <p>Friends</p>
+                        <p>Entertainment</p>
+                    </div>
+                </div>
+                <div>
+                    <!-- H2 heading -->
+                    <h2>A Person You Want to Be</h2>
+                    <div>
+                        <p>Be a smart, good, and strong man</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Life goals -->
+            <div class="life-goal">
+                <!-- H2 headings -->
+                <h2>Life Goals</h2>
+                <div>
+                    <ol>
+                        <li>Contribute to my country through my research</li>
+                        <li>Be a good husband</li>
+                        <li>Have a happy life</li>
+                        <li>Help other people</li>
+                        <li>Be a father who is always there for my childrend</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Goals by years -->
+        <div class="goals-by-years">
+            <div>
+                <!-- H2 headings -->
+                <h2>Your 2020 Goals</h2>
+                <ol>
+                    <li>Publish my first paper</li>
+                    <li>Join the 500kg Club</li>
+                    <li>Master NLP</li>
+                </ol>
+            </div>
+            <div>
+                <!-- H2 headings -->
+                <h2>Your 2030 Goals</h2>
+                <ol>
+                    <li>Become a Ph.D</li>
+                    <li>Make a family</li>
+                </ol>
+            </div>
+            <div>
+                <!-- H2 headings -->
+                <h2>Your 2040 Goals</h2>
+                <ol>
+                    <li>Become a professor</li>
+                </ol>
+            </div>
+            <div>
+                <!-- H2 headings -->
+                <h2>Your 2050 Goals</h2>
+                <ol>
+                    <li>Win the Nobel Prize</li>
+                </ol>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MEGO recommendation -->
+    <div class="recommendation">
+        <!-- H1 heading -->
+        <h1>MEGO recommendation</h1>
+        <!-- Overall advice -->
+        <div class="overall-advice">
+            <div>
+                <p>{{ user.nickname }}, you want to publish your first paper this year <br>
+                Even though it is stressful at the lab studying and researching, healthy body is important for you.
+                </p>
+            </div>
+        </div>
+
+        <!-- Recommended contents -->
+        <div class="recommended-contents-wrapper">
+            <div>
+                <!-- H2 heading -->
+                <h2>recommendation for</h2>
+            </div>
+            <div>
+                <!-- H2 heading -->
+                <h2>recommendation for</h2>
+            </div>
+            <div>
+                <!-- H2 heading -->
+                <h2>recommendation for</h2>
+            </div>
+            <div>
+                <!-- H2 heading -->
+                <h2>recommendation for</h2>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
