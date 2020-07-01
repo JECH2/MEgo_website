@@ -14,7 +14,7 @@ class ExpFormStepOne(forms.ModelForm):
         widgets = {
             'exp_date': forms.TextInput(attrs={'class':'custom-form','placeholder':'When did it happen?'}),
             'event' : forms.Textarea(attrs={'class':'custom-form','placeholder':'What happened?'}),
-            'related_people': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Who were you with?'}),
+            'related_people': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Who were you with?(e.g. EunjinChoi, JiwonYoon, JiseongYang)'}),
             'related_place': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Where did it happen?'}),
             #'photo' : forms.ClearableFileInput(attrs={'class':'custom-fileInput-form'}),
             'media_links' : forms.TextInput(
@@ -112,7 +112,7 @@ class ExpForm(forms.ModelForm):
         fields = ['exp_date', 'related_people','related_place','thumbnail_photo', 'media_links', 'event', 'thoughts','emotion','importance']
         widgets = {
             'exp_date': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'When did it happen?'}),
-            'related_people': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Who were you with?'}),
+            'related_people': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Who were you with?(e.g. EunjinChoi, JiwonYoon, JiseongYang)'}),
             'related_place': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Where did it happen?'}),
             'thumbnail_photo' : forms.ClearableFileInput(attrs={'class':'custom-fileInput-form'}),
             'media_links' : forms.TextInput(
@@ -144,12 +144,12 @@ class ExpForm(forms.ModelForm):
 class DynamicLifeIWishForm(forms.ModelForm):
     class Meta:
         model = LifeIWish
-        fields = ['life_values_high','life_values_low', 'ideal_person', 'life_goals',
+        fields = ['author','life_values_high','life_values_low', 'ideal_person', 'life_goals',
                   'goal_of_the_year_2020', 'goal_of_the_year_2030', 'goal_of_the_year_2040', 'goal_of_the_year_2050']
         widgets = {
             'life_values_high': forms.Textarea(attrs={'class': 'custom-form', 'placeholder': 'What are the important things for you?'}),
             'life_values_low': forms.Textarea(attrs={'class': 'custom-form', 'placeholder': 'What things are not that important for you?'}),
-            'ideal_person' : forms.Textarea(attrs={'class':'custom-form','placeholder':'what kind of person do you want to be?'}),
+            'ideal_person' : forms.Textarea(attrs={'class':'custom-form','placeholder':'What kind of person do you want to be?'}),
             'life_goals': forms.Textarea(attrs={'class':'custom-form','placeholder':'What kind of life do you want to live?\nWhat do you want to achieve?'}),
             'goal_of_the_year_2020' : forms.Textarea(attrs={'class':'custom-form','placeholder':'What do you want to achieve by 2020?'}),
             'goal_of_the_year_2030' : forms.Textarea(attrs={'class':'custom-form','placeholder':'How do you imagine yourself in 2030?'}),

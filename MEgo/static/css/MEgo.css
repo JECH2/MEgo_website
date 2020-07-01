@@ -8,6 +8,7 @@
     left: 0;
     right: 0;
     background: none;
+    z-index:9;
   /* 생략 */
 }
 
@@ -72,11 +73,47 @@
 }
 
 .exp {
-    margin-bottom: 70px;
+    background-color: none;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 10px;
+    padding-bottom: 50px;
 }
+
 
 .exp h1 a, .exp h1 a:visited {
     color: #000000;
+}
+
+.exp a{
+    background: rgba(255,255,255,0.2);
+    padding-left:10px;
+    padding-right:10px;
+    color:white;
+}
+
+.exp table {
+    margin:20px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.exp label {
+    font-family: 'Catamaran', sans-serif;
+    font-weight: 600;
+    color: white;
+    margin-top : 12px;
+    margin-bottom : 12px;
+    margin-right:10px;
+    text-align: left;
+}
+
+
+.exp td {
+    background: rgba(255,255,255,0.15);
+    width:350px;
+    padding:3px;
+    margin-left:20px;
 }
 
 a{
@@ -85,32 +122,28 @@ a{
 }
 
 /* font for titles */
-h1 {
+h1, h2, h3, h4 {
     font-family: 'Catamaran', sans-serif;
-    font-weight: 900;
-}
-
-h2, h3, h4 {
     font-weight: 600;
 }
 
 /* css style for overall form design in experience editing page */
 .form-group-exp {
-    background-color: rgb(198,155,177);
+    background-color: none;
     margin-top: 0px;
     margin-bottom: 0px;
-    padding-top: 50px;
+    padding-top: 10px;
     padding-bottom: 50px;
 }
 textarea {
-    height:200px;
+    height:140px;
 }
 .form-group-exp input, .form-group-exp textarea {
     font-family: 'Catamaran', sans-serif;
     font-weight: 400;
     color: black;
     border-style: none;
-    background-color:rgb(214,183,199);
+    background-color: rgba(255,255,255,0.15);
     color:white;
 }
 .form-group-exp p, .form-group-exp label {
@@ -118,21 +151,21 @@ textarea {
     font-weight: 600;
     color: white;
     margin-top : 12px;
-    margin-bottom : 12px;
+    margin-bottom : 18px;
 }
 
 /* button centering wrapper for experience edit form */
 .button-center-wrapper-exp {
   display: flex;
   justify-content: center;
-  margin-top : 12px;
+  margin-top : 20px;
 }
 
 .button-center-wrapper-exp button, .button-center-wrapper-exp button:hover {
     border-style: solid;
     border-color: white;
     border-width: 0.7px;
-    background-color: rgb(198,155,177);
+    background-color: rgba(255,255,255,0.1);
     padding: 8px 18px;
     color:white;
     margin-left:7px;
@@ -173,11 +206,17 @@ textarea {
     border-style: none;
     background-color:rgb(142,65,107);
     color:white;
-    margin-left:10px;
-    margin-right:10px;
+    margin-left:13px;
+    margin-right:13px;
     margin-top:3px;
     margin-bottom:3px;
 }
+
+.custom-form-wrapper {
+    margin-top: 3em;
+    margin-block-end: 3em;
+}
+
 
 .custom-checkbox-form {
     list-style-type: none;
@@ -185,6 +224,11 @@ textarea {
     margin:0;
     margin-top:10px;
     margin-bottom:20px;
+}
+
+.custom-radio-form {
+    margin-top: 40px;
+    margin-bottom: 60px;
 }
 
 .custom-radio-form-default {
@@ -598,7 +642,7 @@ textarea {
 
 /* Questions */
 .question {
-    padding-top: 140px;
+    padding-top: 180px;
     color: white;
 }
 .question a {
@@ -668,13 +712,15 @@ textarea {
 
 /* support page */
 .support-wrapper {
-    margin: 100px;
+    margin-top: 100px;
+    margin-bottom: 200px;
 }
 
 .support-wrapper h1 {
     letter-spacing: 10px;
-    color:rgb(229,211,221);
-    font-weight:600;
+    color:#CFA3BB;
+    font-weight:900;
+
 }
 
 .support-wrapper p {
@@ -685,7 +731,7 @@ textarea {
 
 .people-wrapper {
     margin:50px;
-    display:flex;
+    display: flex;
 }
 
 .people-wrapper > div {

@@ -1,4 +1,4 @@
-{% extends 'MEgo/base.html' %}
+{% extends 'MEgo/question_answer.html' %}
 {% load i18n %}
 
 {% block content %}
@@ -20,7 +20,7 @@
   </table>
   <div class="button-center-wrapper-exp">
   {% if wizard.steps.prev %}
-    <button class="button" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
+    <button class="button" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% trans "Back step" %}</button>
   {% endif %}
     <button class="button" type="submit" value="{% trans "submit" %}">Next</button>
   </div>

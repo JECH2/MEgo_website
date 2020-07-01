@@ -23,7 +23,9 @@ def experience_circle(request):
         return experience_as_list(request)
     else:
         exps = Experience.objects.filter(author__exact=request.user.id).order_by('exp_date')
-    return render(request, 'MEgo/experience_circle.html', {'exps':exps})
+        n_exps = exps.count()
+        print(n_exps, type(n_exps))
+    return render(request, 'MEgo/experience_circle.html', {'n_exps':n_exps,'exps':exps})
 
 
 # for rendering page of experience as list
@@ -39,7 +41,7 @@ def experience_as_list(request):
 @login_required
 def experience_detail(request, pk):
     exp = get_object_or_404(Experience, pk=pk)
-    return render(request, 'MEgo/experience_detail.html', {'exp':exp})
+    return render(request, 'MEgo/new_experience_detail.html', {'exp':exp})
 
 # for rendering page of recording new experience
 @login_required
@@ -55,11 +57,11 @@ def experience_new(request):
             exp.emotion_color = emo_to_hex(parsed_emotion)
 
             exp.save()
-            return redirect('experience_detail', pk=exp.pk)
+            return redirect('experience_circle')
     else:
         # for the first time
         form = ExpForm()
-    return render(request, 'MEgo/experience_edit.html', {'form': form})
+    return render(request, 'MEgo/question_answer.html', {'form': form})
 
 
 class ExpFormWizardView(SessionWizardView):
@@ -95,11 +97,11 @@ def experience_edit(request, pk):
             parsed_emotion = exp.emotion.strip().split(',')
             exp.emotion_color = emo_to_hex(parsed_emotion)
             exp.save()
-            return redirect('experience_detail', pk=exp.pk)
+            return redirect('new_experience_detail', pk=exp.pk)
     else:
         # for the first time
         form = ExpForm(instance=exp)
-    return render(request, 'MEgo/experience_edit.html', {'form': form})
+    return render(request, 'MEgo/question_answer.html', {'form': form})
 
 # view of experience editing from question
 # another type of view : not function view, class view
@@ -135,15 +137,12 @@ class NewExpbyQView(CreateView):
 # for dynamic field change
 class NewLfvQView(CreateView):
     model = LifeIWish
-    template_name = 'MEgo/experience_edit.html'
+    #template_name = 'MEgo/experience_edit.html'
+    template_name = 'MEgo/question_answer.html'
     form_class = DynamicLifeIWishForm
 
     def get_success_url(self):
         return reverse('experience_circle')
-
-    # def get_form(self, form_class):
-    #     print(self.request.user)
-    #     return DynamicLifeIWishForm(get_user_model())
 
     def get_form_kwargs(self):
         pk = self.kwargs['pk']
@@ -223,7 +222,7 @@ def experience_new_by_question(request, qt, pk):
                 parsed_emotion = exp.emotion.strip().split(',')
                 exp.emotion_color = emo_to_hex(parsed_emotion)
                 exp.save()
-                return redirect('experience_detail', pk=exp.pk)
+                return redirect('experience_circle')
         else:
             if pk == 0:
                 form = ExpForm() #normal case
@@ -231,7 +230,7 @@ def experience_new_by_question(request, qt, pk):
                 # fill form based on pre-defined tags
                 form = ExpForm(initial={q.question_area: q.related_tags})
 
-    return render(request, 'MEgo/experience_edit.html', {'form': form})
+    return render(request, 'MEgo/question_answer.html', {'form': form})
 
 @login_required
 def life_value_detail(request, pk):
@@ -284,7 +283,7 @@ def signup(request):
             print(form)
             user_instance = form.save()
             login(request, user_instance)
-        return render(request, 'registration/signup_complete.html', {'id' : id })
+        return render(request, 'MEgo/experience_circle.html', {'id' : id })
     else:
         form = UserForm()
 

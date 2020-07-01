@@ -1,11 +1,11 @@
-{% extends 'MEgo/base.html' %}
+{% extends 'MEgo/question_answer.html' %}
 {% load i18n %}
 
 {% block content %}
 <div class="form-group-exp">
   <h1>Diary</h1>
 <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
-<form action="" method="post">
+<form class="custom-form-wrapper" action="" method="post">
   {% csrf_token %}
   {{ wizard.management_form }}
       <p>{{ wizard.form.importance.label_tag }}</p>
@@ -18,6 +18,14 @@
                        name="{{ field.data.name }}" value="{{ field.data.value }}">
                 <label for="{{ field.id_for_label }}" style="width:{{ field.data.label }}; height:{{field.data.label}}; line-height:{{field.data.label}}">{{ field.data.value }}</label>
             </td>
+            <script type="text/javascript">
+                var r = int({{ field.data.label }});
+                var id = int({{ field.id_for_label }});
+                r = r* 2;
+                document.getElementById(String(id)).setAttribute("width",String(r));
+                document.getElementById(String(id)).setAttribute("height",String(r));
+                document.getElementById(String(id)).setAttribute("line-height", String(r));
+            </script>
             {% cycle '' '' '</tr>' %}
             {% endfor %}
         </table>

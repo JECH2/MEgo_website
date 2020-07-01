@@ -1,0 +1,53 @@
+{% extends 'MEgo/new_question_base.html' %}
+{% load static %}
+
+{% block content %}
+    <style>
+        body {
+        background: {{ exp.emotion_color }};
+        color: white;
+        }
+    </style>
+    <div class="exp">
+        <h1>View Experience</h1>
+            <table>
+                <tr>
+                    <th><label>Date</label></th>
+                    <td>{{exp.exp_date}}</td>
+                </tr>
+                {% if exp.thumbnail_photo %}
+                <tr>
+                    <th><label>Pic/Videos</label></th>
+                    <td><img src="{{ exp.thumbnail_photo.url }}" width="350"></td>
+                </tr>
+                {% endif %}
+                {% if exp.related_people %}
+                <tr>
+                    <th><label>People</label></th>
+                    <td>{{exp.related_people}}</td>
+                </tr>
+                {% endif %}
+                {% if exp.related_place %}
+                <tr>
+                    <th><label>Location</label></th>
+                    <td>{{exp.related_place}}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th><label>Event</label></th>
+                    <td>{{exp.event}}</td>
+                </tr>
+                <tr>
+                    <th><label>Thoughts</label></td>
+                    <td>{{exp.thoughts}}</td>
+                </tr>
+                <tr>
+                    <th><label>Emotions</label></th>
+                    <td>{{exp.emotion}}</td>
+                </tr>
+            </table>
+
+        <a href="{% url 'experience_edit' pk=exp.pk %}">edit</a>
+        <a href="{% url 'experience_delete' pk=exp.pk %}">delete</a>
+    </div>
+{% endblock %}

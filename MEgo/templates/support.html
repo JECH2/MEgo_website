@@ -2,7 +2,20 @@
 {% load static %}
 
 {% block content %}
-    <img src="{% static "Icons/megosymbol.png" %}">
+    <style>
+        body {
+            padding-top:200px;
+        }
+        #name {
+            font-weight:600;
+        }
+        .support-wrapper h2 {
+            font-size:40px;
+            color:rgba(0,0,0,0.4);
+            font-weight:400;
+        }
+    </style>
+    <img src="{% static "Icons/megosymbol_text.png" %}"height="80%">
     <div class="support-wrapper">
         <p>MEGO is close friend who truly cares about you.<br></br></p>
         <p>You can talk about your experiences and thoughts freely and MEGO will listen.<br></br></p>
@@ -10,28 +23,28 @@
         <p>You will be able to see what kind of person you are and grow self-awareness.<br></br></p>
         <p>Having a better understanding of my life and the life I wish to live.</p>
     </div>
-
+    <div class="support-wrapper">
+        <h1>MISSION</h1>
+        <h2>Live Your Best Life</h2>
+        <img src="{% static "Icons/support_img.png" %}"height="70%">
+    </div>
     <div class="support-wrapper">
         <h1>TEAM WEGO</h1>
         <div class="people-wrapper">
             <div>
-                <p>Jiwon Yoon</p>
-                <p>CEO, Designer</p>
-            </div>
-            <div>
-                <p>Jiseong Yang</p>
+                <p id="name">Jiseong Yang</p>
                 <p>Data Analyst</p>
             </div>
             <div>
-                <p>Eunjin Choi</p>
+                <p id="name">Eunjin Choi</p>
                 <p>Developer</p>
             </div>
+            <div>
+                <p id="name">Jiwon Yoon</p>
+                <p>CEO, Designer</p>
+            </div>
         </div>
-    </div>
-    <div class="support-wrapper">
-        <h1>MISSION</h1>
-        <h2>Live Your Best Life</h2>
-        <p>WEGOWEGOWEGOWEGO</p>
+        <img src="{% static "Icons/WEGO.png" %}"height="75%">
     </div>
     <div class="support-wrapper">
         <h1>CONTACT</h1>
