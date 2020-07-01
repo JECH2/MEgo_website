@@ -1,8 +1,7 @@
 # forms to get user's input
 
 from django import forms
-from .models import User, UserManager
-from .models import Experience, EmotionColor
+from .models import *
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from .color import emo_to_hex
 from django_select2 import forms as s2forms
@@ -14,8 +13,8 @@ class ExpFormStepOne(forms.ModelForm):
         fields = ['exp_date', 'event', 'related_people', 'related_place', 'media_links']
         widgets = {
             'exp_date': forms.TextInput(attrs={'class':'custom-form','placeholder':'When did it happen?'}),
-            'event' : forms.TextInput(attrs={'class':'custom-form','placeholder':'What happened?'}),
-            'related_people': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Who were you with?'}),
+            'event' : forms.Textarea(attrs={'class':'custom-form','placeholder':'What happened?'}),
+            'related_people': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Who were you with?(e.g. EunjinChoi, JiwonYoon, JiseongYang)'}),
             'related_place': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Where did it happen?'}),
             #'photo' : forms.ClearableFileInput(attrs={'class':'custom-fileInput-form'}),
             'media_links' : forms.TextInput(
@@ -38,7 +37,7 @@ class ExpFormStepTwo(forms.ModelForm):
         model = Experience
         fields = ['thoughts','emotion']
         widgets = {
-            'thoughts' : forms.TextInput(attrs={'class':'custom-form','placeholder':'What did you think'}),
+            'thoughts' : forms.Textarea(attrs={'class':'custom-form','placeholder':'What did you think'}),
             'emotion' : forms.CheckboxSelectMultiple(attrs={'class': 'custom-checkbox-form', 'placeholder':'How did you feel?'}, choices=[(item.emotion,emo_to_hex([item.emotion])) for item in EmotionColor.objects.all()]),
         }
         labels = {
@@ -75,6 +74,36 @@ class TestWidget(s2forms.ModelSelect2MultipleWidget):
     def label_from_instance(self, obj):
         return force_str(obj.emotion)
 
+class LifeIWishForm(forms.ModelForm):
+    class Meta:
+        model = LifeIWish
+        fields = ['life_values_high','life_values_low', 'ideal_person', 'life_goals',
+                  'goal_of_the_year_2020', 'goal_of_the_year_2030', 'goal_of_the_year_2040', 'goal_of_the_year_2050']
+        widgets = {
+            'life_values_high': forms.Textarea(attrs={'class': 'custom-form', 'placeholder': 'What are the important things for you?'}),
+            'life_values_low': forms.Textarea(attrs={'class': 'custom-form', 'placeholder': 'What things are not that important for you?'}),
+            'ideal_person' : forms.Textarea(attrs={'class':'custom-form','placeholder':'what kind of person do you want to be?'}),
+            'life_goals': forms.Textarea(attrs={'class':'custom-form','placeholder':'What kind of life do you want to live?\nWhat do you want to achieve?'}),
+            'goal_of_the_year_2020' : forms.Textarea(attrs={'class':'custom-form','placeholder':'What do you want to achieve by 2020?'}),
+            'goal_of_the_year_2030' : forms.Textarea(attrs={'class':'custom-form','placeholder':'How do you imagine yourself in 2030?'}),
+            'goal_of_the_year_2040': forms.Textarea(attrs={'class': 'custom-form', 'placeholder': 'How do you imagine yourself in 2040?'}),
+            'goal_of_the_year_2050': forms.Textarea(attrs={'class': 'custom-form', 'placeholder': 'How do you imagine yourself in 2050?'}),
+        }
+        labels = {
+            'life_values_high':'High Priorities',
+            'life_values_low': 'Low Priorities',
+            'ideal_person': 'Your Ideal Person',
+            'life_goals':'Whole Life',
+            'goal_of_the_year_2020': 'Year 2020',
+            'goal_of_the_year_2030': 'Year 2030',
+            'goal_of_the_year_2040': 'Year 2040',
+            'goal_of_the_year_2050': 'Year 2050',
+        }
+    def __init__(self, *args, **kwargs):
+        #self.skipped_category = kwargs.pop('skipped_category', None)
+        super(LifeIWishForm, self).__init__(*args, **kwargs)
+        #self.fields[self.skipped_category].widget = forms.HiddenInput()
+        self.label_suffix = ''
 
 class ExpForm(forms.ModelForm):
     class Meta:
@@ -83,16 +112,16 @@ class ExpForm(forms.ModelForm):
         fields = ['exp_date', 'related_people','related_place','thumbnail_photo', 'media_links', 'event', 'thoughts','emotion','importance']
         widgets = {
             'exp_date': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'When did it happen?'}),
-            'related_people': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Who were you with?'}),
+            'related_people': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Who were you with?(e.g. EunjinChoi, JiwonYoon, JiseongYang)'}),
             'related_place': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'Where did it happen?'}),
             'thumbnail_photo' : forms.ClearableFileInput(attrs={'class':'custom-fileInput-form'}),
             'media_links' : forms.TextInput(
                 attrs={'class': 'custom-form',
                         'placeholder':'insert some medium(picture, video) as link : https://mego.pythonanywhere.com'}),
-            'event' : forms.TextInput(attrs={'class':'custom-form','placeholder':'what happened to you'}),
-            'thoughts' : forms.TextInput(attrs={'class':'custom-form','placeholder':'what did you think'}),
-            'emotion' : TestWidget,
-            #'emotion' : forms.TextInput(attrs={'class':'custom-form','placeholder':'how did you feel'}),
+            'event' : forms.Textarea(attrs={'class':'custom-form','placeholder':'what happened to you'}),
+            'thoughts' : forms.Textarea(attrs={'class':'custom-form','placeholder':'what did you think'}),
+            #'emotion' : TestWidget,
+            'emotion' : forms.TextInput(attrs={'class':'custom-form','placeholder':'how did you feel'}),
             'importance' : forms.RadioSelect(attrs={'class':'custom-radio-form-default'}, choices=IMPORTANCE_CHOICES),
         }
         labels = {
@@ -112,12 +141,45 @@ class ExpForm(forms.ModelForm):
         #self.fields[self.skipped_category].widget = forms.HiddenInput()
         self.label_suffix = ''
 
+class DynamicLifeIWishForm(forms.ModelForm):
+    class Meta:
+        model = LifeIWish
+        fields = ['author','life_values_high','life_values_low', 'ideal_person', 'life_goals',
+                  'goal_of_the_year_2020', 'goal_of_the_year_2030', 'goal_of_the_year_2040', 'goal_of_the_year_2050']
+        widgets = {
+            'life_values_high': forms.Textarea(attrs={'class': 'custom-form', 'placeholder': 'What are the important things for you?'}),
+            'life_values_low': forms.Textarea(attrs={'class': 'custom-form', 'placeholder': 'What things are not that important for you?'}),
+            'ideal_person' : forms.Textarea(attrs={'class':'custom-form','placeholder':'What kind of person do you want to be?'}),
+            'life_goals': forms.Textarea(attrs={'class':'custom-form','placeholder':'What kind of life do you want to live?\nWhat do you want to achieve?'}),
+            'goal_of_the_year_2020' : forms.Textarea(attrs={'class':'custom-form','placeholder':'What do you want to achieve by 2020?'}),
+            'goal_of_the_year_2030' : forms.Textarea(attrs={'class':'custom-form','placeholder':'How do you imagine yourself in 2030?'}),
+            'goal_of_the_year_2040': forms.Textarea(attrs={'class': 'custom-form', 'placeholder': 'How do you imagine yourself in 2040?'}),
+            'goal_of_the_year_2050': forms.Textarea(attrs={'class': 'custom-form', 'placeholder': 'How do you imagine yourself in 2050?'}),
+        }
+        labels = {
+            'life_values_high':'High Priorities',
+            'life_values_low': 'Low Priorities',
+            'ideal_person': 'Your Ideal Person',
+            'life_goals':'Whole Life',
+            'goal_of_the_year_2020': 'Year 2020',
+            'goal_of_the_year_2030': 'Year 2030',
+            'goal_of_the_year_2040': 'Year 2040',
+            'goal_of_the_year_2050': 'Year 2050',
+        }
+    def __init__(self, *args, **kwargs):
+        self.only_see_category = kwargs.pop('only_see_category', None)
+        super(DynamicLifeIWishForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            if field != self.only_see_category:
+                print(field, self.only_see_category)
+                self.fields[field].widget = forms.HiddenInput()
+        self.label_suffix = ''
 
 class DynamicExpForm(forms.ModelForm):
     class Meta:
         IMPORTANCE_CHOICES = [('1', 'not important'), ('2', 'important'), ('3', 'very important')]
         model = Experience
-        fields = ['photo', 'thumbnail_photo', 'media_links', 'event', 'thoughts','emotion','importance']
+        fields = ['author','photo', 'thumbnail_photo', 'media_links', 'event', 'thoughts','emotion','importance']
         widgets = {
             'event': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'what happened to you?'}),
             'thoughts': forms.TextInput(attrs={'class': 'custom-form', 'placeholder': 'what did you think?'}),

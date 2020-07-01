@@ -8,39 +8,26 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;900&display=swap">
     <style>
         body {
-            background: white;
+            background: radial-gradient( at 0% 0%, rgba(143,52,101,0.6) 0%, rgba(108,28,71,0.6) 50%, rgba(62,38,81,0.6) 100%);
             font-family: 'Catamaran', sans-serif;
             font-weight: 400;
-            color: rgb(229,211,221);
-            padding-top : 350px;
-            font-size : 18px;
-        }
-        #to_support {
-            z-index:10;
-            position:absolute;
-            margin-top:80px;
-            margin-left:-137px;
-            font-weight:600;
-            font-size:22px;
+            color: white;
+            padding-top : 160px;
         }
     </style>
     </head>
     <body>
         <header class="page-header">
-            <h1 id="logo">
-                <a href="{% url 'experience_circle' %}"><img src="{% static "Icons/Mego_color.png" %}" height="50"></img></a>
-
-            </h1>
+            <h1 id="logo"><a href="{% url 'experience_circle' %}"><img src="{% static "Icons/Mego_white.png" %}" height="50"></a></h1>
             <nav>
                 <ul class="top-menu">
                     {% if user.is_authenticated %}
                     <li><a>{{ user.nickname }}'s MEGO</a></li>
                     <li><a href="{% url 'logout' %}">LOGOUT</a></li>
                     {% endif %}
-                    <li><a href="{% url 'analysis_report' %}"><img src="{% static "Icons/megosymbol.png" %}" width="50" height="50"></a></li>
+                    <li><a href="{% url 'experience_circle' %}"><img src="{% static "Icons/megosymbol_white.png" %}" width="50" height="50"></a></li>
                 </ul>
             </nav>
-            <a id="to_support" href="{% url 'support' %}">About MEGO</a>
         </header>
         <div class="content container">
             <center>

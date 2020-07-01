@@ -148,7 +148,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-LOGIN_REDIRECT_URL = '/'
+#LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/MEgo/new_q/'
 
 # Media files upload URL & Directories
 MEDIA_URL = '/files/' # URL path
