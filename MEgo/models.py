@@ -159,3 +159,27 @@ class Experience(models.Model):
 
     def __str__(self):
         return self.event
+
+# Report
+class Report(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    input_date = models.DateTimeField(default=timezone.now)
+    # .png file
+    wordcloud_event = models.ImageField(blank=True, null=True, upload_to=user_path)
+    wordcloud_thought =  models.ImageField(blank=True, null=True, upload_to=user_path)
+    word_clustering = models.ImageField(blank=True, null=True, upload_to=user_path)
+    social_map = models.ImageField(blank=True, null=True, upload_to=user_path)
+    people_count = models.ImageField(blank=True, null=True, upload_to=user_path)
+
+    # things
+    things_joy = models.TextField(blank=True, null=True)
+    things_sadness = models.TextField(blank=True, null=True)
+    things_fear = models.TextField(blank=True, null=True)
+
+    # pos relationship
+    pos_people_close = models.TextField(blank=True, null=True)
+    pos_people_far = models.TextField(blank=True, null=True)
+
+    # neg relationship
+    neg_people_close = models.TextField(blank=True, null=True)
+    neg_people_far = models.TextField(blank=True, null=True)
