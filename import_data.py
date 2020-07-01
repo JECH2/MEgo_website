@@ -49,22 +49,26 @@ from MEgo.models import ExpQuestions, LifeQuestions, EmotionColor
 #
 from MEgo.models import Experience, User
 from MEgo.color import emo_to_hex
-CSV_PATH = 'MEgo/report/jiseong.csv'
-username = os.path.basename(CSV_PATH)[:-4]
-usr = User.objects.get(user_id=username)
-with open(CSV_PATH, newline='') as csvfile:
-    data_reader = csv.DictReader(csvfile)
+#CSV_PATH = 'MEgo/report/jiseong.csv'
 
-    for row in data_reader:
-        print(row)
-        parsed_emotion = row['emotion_label'].strip().split(',')
-        exp = Experience.objects.create(
-            author = usr,
-            event = row['event'],
-           thoughts = row['thoughts'],
-          emotion = row['emotion_label'],
-            importance = row['importance'],
-            related_people=row['related_people'],
-            related_place=row['related_place'],
-            emotion_color=emo_to_hex(parsed_emotion),
-        )
+# writes experience data as csv
+def import_exp_data(CSV_PATH)
+    username = os.path.basename(CSV_PATH)[:-4]
+    usr = User.objects.get(user_id=username)
+
+    with open(CSV_PATH, newline='') as csvfile:
+        data_reader = csv.DictReader(csvfile)
+
+        for row in data_reader:
+            print(row)
+            parsed_emotion = row['emotion_label'].strip().split(',')
+            exp = Experience.objects.create(
+                author = usr,
+                event = row['event'],
+               thoughts = row['thoughts'],
+              emotion = row['emotion_label'],
+                importance = row['importance'],
+                related_people=row['related_people'],
+                related_place=row['related_place'],
+                emotion_color=emo_to_hex(parsed_emotion),
+            )

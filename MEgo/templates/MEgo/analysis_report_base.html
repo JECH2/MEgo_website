@@ -22,8 +22,8 @@
             <nav>
                 <ul class="top-menu">
                     {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}" style="font-size:10px;">LOGOUT</a></li>
                     <li><a>{{ user.nickname }}'s MEGO</a></li>
-                    <li><a href="{% url 'logout' %}">LOGOUT</a></li>
                     {% endif %}
                     <li><a href="{% url 'experience_circle' %}"><img src="{% static "Icons/megosymbol_white.png" %}" width="50" height="50"></a></li>
                 </ul>

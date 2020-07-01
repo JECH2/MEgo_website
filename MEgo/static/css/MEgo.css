@@ -726,7 +726,7 @@ textarea {
 .support-wrapper p {
     margin-block-start: 5px;
     margin-block-end: 5px;
-    color: gray;
+    color:rgba(0,0,0,0.3);
 }
 
 .people-wrapper {

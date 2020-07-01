@@ -23,7 +23,7 @@ class ExpFormStepOne(forms.ModelForm):
         }
         labels = {
             'exp_date':'Date',
-            'event':'Event',
+            'event':'Event*',
             'related_people': 'People',
             'related_place': 'Location',
             'media_links': 'Videos',
@@ -41,8 +41,8 @@ class ExpFormStepTwo(forms.ModelForm):
             'emotion' : forms.CheckboxSelectMultiple(attrs={'class': 'custom-checkbox-form', 'placeholder':'How did you feel?'}, choices=[(item.emotion,emo_to_hex([item.emotion])) for item in EmotionColor.objects.all()]),
         }
         labels = {
-            'thoughts':'Thoughts',
-            'emotion':'Emotions',
+            'thoughts':'Thoughts*',
+            'emotion':'Emotions*',
         }
     def __init__(self, *args, **kwargs):
         super(ExpFormStepTwo, self).__init__(*args, **kwargs)
@@ -57,7 +57,7 @@ class ExpFormStepThree(forms.ModelForm):
             'importance' : forms.RadioSelect(attrs={'class':'custom-radio-form'}, choices=IMPORTANCE_CHOICES),
         }
         labels = {
-            'importance':'How important is this experience?',
+            'importance':'How important is this experience?*',
         }
     def __init__(self, *args, **kwargs):
         super(ExpFormStepThree, self).__init__(*args, **kwargs)
@@ -126,14 +126,14 @@ class ExpForm(forms.ModelForm):
         }
         labels = {
             'exp_date':'Date',
-            'event':'Event',
+            'event':'Event*',
             'related_people': 'People',
             'related_place': 'Location',
             'thumbnail_photo':'Photo',
             'media_links': 'Videos',
-            'thoughts': 'Thoughts',
-            'emotion': 'Emotions',
-            'importance': 'Importance',
+            'thoughts': 'Thoughts*',
+            'emotion': 'Emotions*',
+            'importance': 'Importance*',
         }
     def __init__(self, *args, **kwargs):
         #self.skipped_category = kwargs.pop('skipped_category', None)

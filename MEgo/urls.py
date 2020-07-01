@@ -18,6 +18,7 @@ urlpatterns = [
     #path('MEgo/<int:pk>/edit/', views.NewExpbyQView.as_view(), name='experience_edit'),
     path('MEgo/new_m/', views. ExpFormWizardView.as_view([ExpFormStepOne, ExpFormStepTwo, ExpFormStepThree]), name='experience_new_m'),
     path('MEgo/report/', views.analysis_report, name='analysis_report'),
+    path('MEgo/report/create', views.create_report, name='create_report'),
     path('MEgo/new_q/', views.new_question, name='new_question'),
     #path('MEgo/new_q/<int:pk>/', views.NewExpbyQView.as_view(), name='experience_new_by_question_d'),
     path('MEGo/future/new_q/<int:pk>/', views.NewLfvQView.as_view(), name='lfv_new_by_question_d'),

@@ -15,6 +15,8 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 from random import randint
 from .color import emo_to_hex
+from .manipulate_csv_data import export_exp_data
+from .mego_all_in_one import get_report
 
 # for rendering page of experience circle
 @login_required
@@ -252,7 +254,42 @@ def social_map(request):
 # for rendering page of analysis report page
 @login_required
 def analysis_report(request):
-    return render(request, 'MEgo/analysis_report.html')
+    report = Report.objects.filter(author__exact=request.user.id).reverse()
+    # if no-report
+    if report.count() > 0:
+        return render(request, 'MEgo/analysis_report.html',{'report':report[0]})
+
+    return redirect('create_report')
+
+# for rendering page of making report
+@login_required
+def create_report(request):
+    username = request.user.user_id
+    csv_path = 'MEgo/report/' + username + '.csv'
+
+    # export data as csv
+    export_exp_data(csv_path)
+    report_data = get_report(csv_path, username)
+
+    # make a report instance
+    report = Report(author=request.user.id,
+                    things_joy=report_data['things_joy'],
+                    thing_sadness=report_data['things_sadness'],
+                    things_fear=report_data['things_fear'],
+                    pos_people_close=report_data['pos_people_close'],
+                    pos_people_far=report_data['pos_people_far'],
+                    neg_people_close=report_data['neg_people_close'],
+                    neg_people_far=report_data['neg_people_far'],
+                    )
+
+    # upload png files
+    report.wordcloud_event.save('e_w.png',File(open('MEgo/report/'+username+'_wordcloud_event.png', 'rb')))
+    report.wordcloud_thought.save('t_w.jpg',File(open('MEgo/report/'+username+'_wordcloud_thought.png', 'rb')))
+    report.word_clustering.save('w_c.png',File(open('MEgo/report/'+username+'_word_clustering.png', 'rb')))
+    report.social_map.save('s_m.png',File(open('MEgo/report/'+username+'_social_map.png', 'rb')))
+    report.people_count.save('s_m.png', File(open('MEgo/report/'+username+'_people_count.png', 'rb')))
+
+    return render(request, 'MEgo/analysis_report.html', {'report':report})
 
 # for rendering page of getting new question when skip button or page refresh is clicked
 @login_required
