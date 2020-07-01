@@ -1,12 +1,41 @@
 {% extends 'MEgo/base.html' %}
+{% load static %}
 
 {% block content %}
-    <div>
-        <h1>Our Team</h1>
-        <p>Jiwon Yoon : CEO, Designer</p>
-        <p>Jiseong Yang : NLP Engineer, Developer</p>
-        <p>Eunjin Choi : Developer<br></br></p>
-        <h1>Contact</h1>
+    <img src="{% static "Icons/megosymbol.png" %}">
+    <div class="support-wrapper">
+        <p>MEGO is close friend who truly cares about you.<br></br></p>
+        <p>You can talk about your experiences and thoughts freely and MEGO will listen.<br></br></p>
+        <p>MEGO will visualize your life through circles of experiences and map of your social life.</p>
+        <p>You will be able to see what kind of person you are and grow self-awareness.<br></br></p>
+        <p>Having a better understanding of my life and the life I wish to live.</p>
+    </div>
+
+    <div class="support-wrapper">
+        <h1>TEAM WEGO</h1>
+        <div class="people-wrapper">
+            <div>
+                <p>Jiwon Yoon</p>
+                <p>CEO, Designer</p>
+            </div>
+            <div>
+                <p>Jiseong Yang</p>
+                <p>Data Analyst</p>
+            </div>
+            <div>
+                <p>Eunjin Choi</p>
+                <p>Developer</p>
+            </div>
+        </div>
+    </div>
+    <div class="support-wrapper">
+        <h1>MISSION</h1>
+        <h2>Live Your Best Life</h2>
+        <p>WEGOWEGOWEGOWEGO</p>
+    </div>
+    <div class="support-wrapper">
+        <h1>CONTACT</h1>
         <p>Da Vinci Lab, KAIST</p>
+        <p>juliejiwon@gmail.com</p>
     </div>
 {% endblock %}

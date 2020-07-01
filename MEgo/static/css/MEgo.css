@@ -85,8 +85,12 @@ a{
 }
 
 /* font for titles */
-h1, h2, h3, h4 {
+h1 {
     font-family: 'Catamaran', sans-serif;
+    font-weight: 900;
+}
+
+h2, h3, h4 {
     font-weight: 600;
 }
 
@@ -98,8 +102,10 @@ h1, h2, h3, h4 {
     padding-top: 50px;
     padding-bottom: 50px;
 }
-
-.form-group-exp input {
+textarea {
+    height:200px;
+}
+.form-group-exp input, .form-group-exp textarea {
     font-family: 'Catamaran', sans-serif;
     font-weight: 400;
     color: black;
@@ -167,12 +173,18 @@ h1, h2, h3, h4 {
     border-style: none;
     background-color:rgb(142,65,107);
     color:white;
+    margin-left:10px;
+    margin-right:10px;
+    margin-top:3px;
+    margin-bottom:3px;
 }
 
 .custom-checkbox-form {
     list-style-type: none;
     padding:0;
     margin:0;
+    margin-top:10px;
+    margin-bottom:20px;
 }
 
 .custom-radio-form-default {
@@ -183,6 +195,10 @@ h1, h2, h3, h4 {
 
 .custom-fileInput-form {
     width: 350px;
+    margin-left:10px;
+    margin-right:10px;
+    margin-top:3px;
+    margin-bottom:3px;
 }
 
 /* wrapper for centering button */
@@ -474,7 +490,7 @@ h1, h2, h3, h4 {
     text-align: left;
 }
 
-.cluster-description > div > h3, p {
+.cluster-description > div > h3, .cluster-description > div > p {
     margin-left: 10px;
 }
 
@@ -648,4 +664,30 @@ h1, h2, h3, h4 {
 .recommended-contents-wrapper h2 {
     text-align: left;
     margin-left: 10px;
+}
+
+/* support page */
+.support-wrapper {
+    margin: 100px;
+}
+
+.support-wrapper h1 {
+    letter-spacing: 10px;
+    color:rgb(229,211,221);
+    font-weight:600;
+}
+
+.support-wrapper p {
+    margin-block-start: 5px;
+    margin-block-end: 5px;
+    color: gray;
+}
+
+.people-wrapper {
+    margin:50px;
+    display:flex;
+}
+
+.people-wrapper > div {
+    flex : 1;
 }

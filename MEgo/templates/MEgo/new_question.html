@@ -4,7 +4,11 @@
 {% block content %}
 <a id="Next" href="{% url 'new_question' %}"><img src="{% static "Icons/_.png" %}" width="50"></a>
     <div class="question">
-        <h1>{{q.content}}</h1>
-        <a href="{% url 'experience_new_by_question' qt=qt pk=q.pk %}">Answer</a>
+        <h2 style="font-size:2em;">{{q.content}}</h2>
+        {% if qt == "1" %}
+            <a href="{% url 'lfv_new_by_question_d' pk=q.pk %}">Answer</a>
+        {% else %}
+            <a href="{% url 'experience_new_by_question' qt=qt pk=q.pk %}">Answer</a>
+        {% endif %}
     </div>
 {% endblock %}

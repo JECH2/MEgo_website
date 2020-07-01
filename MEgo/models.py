@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
 # when user account is created via command, user manager function is called
@@ -99,6 +100,7 @@ class LifeQuestions(models.Model):
 
 # data structure for recording life I wish
 class LifeIWish(models.Model):
+    # author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     input_date = models.DateTimeField(default=timezone.now)
     life_values_high = models.TextField(blank=True, null=True)
     life_values_low = models.TextField(blank=True, null=True)
