@@ -67,3 +67,5 @@ def get_report(data):
     return report_data, pos_people_close, pos_poeple_far, neg_people_close, neg_people_far
 
 report_data, pos_people_close, pos_poeple_far, neg_people_close, neg_people_far = get_report(data)
+
+f.get_url_list(report_data)
