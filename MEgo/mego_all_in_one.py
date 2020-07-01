@@ -18,14 +18,21 @@ CSV_PATH = 'report/jiseong.csv'
 data = pd.read_csv(CSV_PATH,encoding='latin-1')
 username = os.path.basename(CSV_PATH)[:-4]
 
-def get_report(data, username):
+dirname = os.path.realpath(__file__)
+wd = dirname[:-len("mego_all_in_one.py")]+"report"
+
+def get_report(data, username, wd):
     import pandas as pd
     import numpy as np
     import mego_functions as f
+    from pathlib import Path
+    import os
+
+    os.chdir(wd)
 
     event_whole, thought_whole, people_whole, experience_tokenized, people_tokenized_spacing = f.preprocess_all(data)
 
-    f.wordcloud_all(event_whole, thought_whole)
+    f.wordcloud_all(event_whole, thought_whole, wd)
 
     f.get_people_count(people_whole)
 
@@ -40,7 +47,7 @@ def get_report(data, username):
     list_of_people = np.unique(people_tokenized_spacing)
     ego_matrix_exp = f.get_ego_matrix_exp(data, list_of_people)
 
-    pos_people_close, pos_poeple_far, neg_people_close, neg_people_far = f.plot_ego_network_exp(ego_matrix_exp, list_of_people, 30)
+    pos_people_close, pos_people_far, neg_people_close, neg_people_far = f.plot_ego_network_exp(ego_matrix_exp, list_of_people, 30)
 
     report_data = {
         "things_joy": things_joy,
@@ -54,6 +61,5 @@ def get_report(data, username):
     
     return report_data
 
-report_data = get_report(data,username)
 
-print(report_data)
+report_data = get_report(data, username, wd)
