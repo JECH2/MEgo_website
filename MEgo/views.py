@@ -278,16 +278,16 @@ def create_report(request):
     # make a report instance
     report = Report(author=request.user,
                     things_joy=report_data['things_joy'],
-                    thing_sadness=report_data['things_sadness'],
+                    things_sadness=report_data['things_sadness'],
                     things_fear=report_data['things_fear'],
                     )
-    if report_data['pos_people_close']:
+    if report_data['pos_people_close'] is not None:
         setattr(report, 'pos_people_close', report_data['pos_people_close'])
-    if report_data['pos_people_far']:
+    if report_data['pos_people_far'] is not None:
         setattr(report, 'pos_people_far', report_data['pos_people_far'])
-    if report_data['neg_people_close']:
+    if report_data['neg_people_close'] is not None:
         setattr(report, 'neg_people_close', report_data['neg_people_close'])
-    if report_data['neg_people_far']:
+    if report_data['neg_people_far'] is not None:
         setattr(report, 'neg_people_far', report_data['neg_people_far'])
 
     # upload png files
