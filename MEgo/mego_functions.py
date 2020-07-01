@@ -147,7 +147,7 @@ def wordcloud(tokens_whole, name, wd):
     array_wordcloud = wordcloud.generate_from_text(" ".join(tokens_whole)).to_array()
     
     import matplotlib.pyplot as plt
-    fig = plt.figure(figsize=(10, 10))
+    plt.figure(figsize=(10, 10))
     #plt.imshow(array_wordcloud, interpolation="bilinear")
     plt.axis('off')
     #plt.show()
@@ -193,8 +193,7 @@ def get_people_count(people_whole):
     
     # Plot
     with sns.axes_style({"font.family": ["Arial"]}):
-        g = sns.catplot(y="terms", x="counts", kind="bar", palette="BuPu_d", edgecolor=".6", data=fd_df_uni)
-        g.savefig("people_count.png", transparent=True)
+        sns.catplot(y="terms", x="counts", kind="bar", palette="BuPu_d", edgecolor=".6", data=fd_df_uni).savefig("people_count.png", transparent=True)
         # g.fig.suptitle("Your Experience Keywords")
 
 # Get DTM
