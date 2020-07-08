@@ -1,0 +1,11 @@
+author,emotion_label,event,thoughts,importance,related_people,related_place
+jech,"['rage', 'grief']",1,1,,,
+jech,['rage'],1,1,,,
+jech,surprise,1,1,,,
+jech,['35'],visit,1,,,
+jech,disgust,test,1,,,
+jech,['vigilance'],test2,11,,,
+jech,disgust,test,test,,,
+jech,['grief'],testest,1,,1,
+jech,anger,tttttt,tt,,,
+jech,"['ecstasy', 'apprehension']",1,1,,,

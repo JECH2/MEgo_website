@@ -67,6 +67,7 @@ def experience_new(request):
     return render(request, 'MEgo/question_answer.html', {'form': form})
 
 
+# for multi html with one form, we used Wizard
 class ExpFormWizardView(SessionWizardView):
     form_list = [ExpFormStepOne, ExpFormStepTwo, ExpFormStepThree]
 
@@ -109,35 +110,6 @@ def experience_edit(request, pk):
 # view of experience editing from question
 # another type of view : not function view, class view
 # for dynamic field change
-class NewExpbyQView(CreateView):
-    model = Experience
-    template_name = 'MEgo/experience_edit.html'
-    form_class = DynamicExpForm
-    def get_success_url(self):
-        return reverse('experience_circle')
-
-    def get_initial(self):
-        pk = self.kwargs['pk']
-        q = get_object_or_404(ExpQuestions, pk=pk)
-        return {q.question_area: q.related_tags,'author':self.request.user,}
-
-    def get_form_kwargs(self):
-        pk = self.kwargs['pk']
-        q = None
-        skipped_category = None
-
-        if pk > 0:
-            q = get_object_or_404(ExpQuestions, pk=pk)
-        if q is not None:
-            skipped_category = q.question_area
-            kwargs = super(NewExpbyQView, self).get_form_kwargs()
-            #self.form_class.initial={q.question_area: q.related_tags}
-            #kwargs.update({'skipped_category': skipped_category})
-        return kwargs
-
-# view of experience editing from question
-# another type of view : not function view, class view
-# for dynamic field change
 class NewLfvQView(CreateView):
     model = LifeIWish
     #template_name = 'MEgo/experience_edit.html'
@@ -163,41 +135,6 @@ class NewLfvQView(CreateView):
         kwargs = super(NewLfvQView, self).get_form_kwargs()
         kwargs.update({'only_see_category': only_see_category})
         return kwargs
-
-# view of experience editing from question
-# another type of view : not function view, class view
-# for dynamic field change
-class QView(CreateView):
-    template_name = 'MEgo/question_answer.html'
-    def get_success_url(self):
-        return reverse('experience_circle')
-
-    def initialization(self):
-        self.qt = self.kwargs['qt']
-        if self.qt: # 1 = lifeIwish
-            self.model = LifeIWish
-            self.form_class = DynamicLifeIWishForm
-
-        else: # 0 = experience
-            self.model = Experience
-            self.form_class = DynamicExpForm
-        print(self.model, self.form_class)
-
-    def get_form_kwargs(self):
-        self.initialization()
-        pk = self.kwargs['pk']
-        q = None
-        category = None
-        print(self.qt)
-        if self.qt:
-            q = get_object_or_404(LifeQuestions, pk=pk)
-        else:
-            q = get_object_or_404(ExpQuestions, pk=pk)
-        category = q.question_area
-        kwargs = super(QView, self).get_form_kwargs()
-        kwargs.update({'category': category})
-        return kwargs
-
 
 # for rendering another view of experience by question
 # when user choose question,

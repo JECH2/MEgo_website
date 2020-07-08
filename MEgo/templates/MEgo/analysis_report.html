@@ -142,13 +142,11 @@
                     <!-- H2 heading -->
                     <h2>Life Priorities</h2>
                     <div>
-                        <h3>High Priorities</h3>
                         {% for post in lfv %}
                         {% if post.life_values_high %}
                         <p>{{ post.life_values_high }}</p>
                         {% endif %}
                         {% endfor %}
-                        <h3>Low Priorities</h3>
                         {% for post in lfv %}
                         {% if post.life_values_low %}
                         <p>{{ post.life_values_low }}</p>

@@ -7,6 +7,7 @@ from .color import emo_to_hex
 from django_select2 import forms as s2forms
 from django.utils.encoding import force_str
 
+# For multi-page form using FormWizard
 class ExpFormStepOne(forms.ModelForm):
     class Meta:
         model = Experience
@@ -32,6 +33,7 @@ class ExpFormStepOne(forms.ModelForm):
         super(ExpFormStepOne, self).__init__(*args, **kwargs)
         self.label_suffix = ''
 
+# For multi-page form using FormWizard
 class ExpFormStepTwo(forms.ModelForm):
     class Meta:
         model = Experience
@@ -48,6 +50,7 @@ class ExpFormStepTwo(forms.ModelForm):
         super(ExpFormStepTwo, self).__init__(*args, **kwargs)
         self.label_suffix = ''
 
+# For multi-page form using FormWizard
 class ExpFormStepThree(forms.ModelForm):
     class Meta:
         IMPORTANCE_CHOICES = [('1','20px'), ('2','40px'), ('3', '60px')]
@@ -63,6 +66,7 @@ class ExpFormStepThree(forms.ModelForm):
         super(ExpFormStepThree, self).__init__(*args, **kwargs)
         self.label_suffix = ''
 
+# This is tag selection widget, due to small bug, we will fix this and apply this in the future
 class TestWidget(s2forms.ModelSelect2MultipleWidget):
     #model = EmotionColor
     queryset = EmotionColor.objects.only('emotion')
@@ -74,6 +78,7 @@ class TestWidget(s2forms.ModelSelect2MultipleWidget):
     def label_from_instance(self, obj):
         return force_str(obj.emotion)
 
+# Form for LifeIWish : default
 class LifeIWishForm(forms.ModelForm):
     class Meta:
         model = LifeIWish
@@ -100,11 +105,10 @@ class LifeIWishForm(forms.ModelForm):
             'goal_of_the_year_2050': 'Year 2050',
         }
     def __init__(self, *args, **kwargs):
-        #self.skipped_category = kwargs.pop('skipped_category', None)
         super(LifeIWishForm, self).__init__(*args, **kwargs)
-        #self.fields[self.skipped_category].widget = forms.HiddenInput()
         self.label_suffix = ''
 
+# Form for Experience : default
 class ExpForm(forms.ModelForm):
     class Meta:
         IMPORTANCE_CHOICES = [('1','not important'), ('2','important'), ('3', 'very important')]
@@ -141,6 +145,8 @@ class ExpForm(forms.ModelForm):
         #self.fields[self.skipped_category].widget = forms.HiddenInput()
         self.label_suffix = ''
 
+# Form for LifeIWish : dynamic
+# only selecte field will be shown to user
 class DynamicLifeIWishForm(forms.ModelForm):
     class Meta:
         model = LifeIWish
@@ -175,6 +181,9 @@ class DynamicLifeIWishForm(forms.ModelForm):
                 self.fields[field].widget = forms.HiddenInput()
         self.label_suffix = ''
 
+# Form for Experience : dynamic
+# selecte field will not be shown to user, but we don't use this right now,
+# to enable user modify the pre-input words
 class DynamicExpForm(forms.ModelForm):
     class Meta:
         IMPORTANCE_CHOICES = [('1', 'not important'), ('2', 'important'), ('3', 'very important')]
@@ -200,10 +209,6 @@ class DynamicExpForm(forms.ModelForm):
 
 # user signup form
 class UserForm(forms.ModelForm):
-    # # widget을 오버라이드하여 입력될때 *표시를 찍어준다
-    # password = forms.CharField(label='Password', widget=forms.PasswordInput)
-    # password2 = forms.CharField(label='Password2', widget=forms.PasswordInput)
-
     class Meta:
         AGE_CHOICES = [(age, age) for age in range(20, 66)]  # 20 ~ 65
         GENDER_CHOICES = [('M', 'Male'),('W', 'Female')]
@@ -227,7 +232,6 @@ class UserForm(forms.ModelForm):
             'password': 'PW',
         }
 
-    # 글자수 제한
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__( *args, **kwargs)
         self.fields['nickname'].widget.attrs['maxlength'] = 20

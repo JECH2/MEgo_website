@@ -1,7 +1,7 @@
 from .models import *
 from django.core.files import File
 
-
+# example code for uploading .png by using python code
 def make_report():
 
     # username.csv
